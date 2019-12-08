@@ -1,4 +1,4 @@
-// import svelte from 'rollup-plugin-svelte';
+import svelte from 'rollup-plugin-svelte';
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import livereload from 'rollup-plugin-livereload';
@@ -9,7 +9,7 @@ import autoPreprocess from 'svelte-preprocess';
 import { fileRouter } from 'svelte-filerouter'
 import sass from 'rollup-plugin-sass';
 import postcss from 'rollup-plugin-postcss';
-import svelte from 'rollup-plugin-svelte-hot'
+// import svelte from 'rollup-plugin-svelte-hot'
 import hmr, { autoCreate } from 'rollup-plugin-hot'
 
 // Set this to true to pass the --single flag to sirv (this serves your
@@ -39,10 +39,10 @@ export default {
 	output: {
 		sourcemap: true,
 		// "amd", "cjs", "system", "esm", "iife" or "umd".
-		format: 'iife',
+		format: 'esm',
 		name: 'app',
 		dir: 'public/bundle',
-		file: nollup ? 'build/bundle.js' : 'public/build/bundle.js',
+		// file: nollup ? 'build/bundle.js' : 'public/build/bundle.js',
 	},
 	plugins: [
 		fileRouter({
@@ -63,19 +63,6 @@ export default {
 		// 	template: 'src/template.html',
 		// 	target: 'index.html',
 		// }),
-		// svelte({
-		// 	preprocess: autoPreprocess({
-		// 		postcss: true,
-		// 		scss: true
-		// 	}),
-		// 	// enable run-time checks when not in production
-		// 	dev: !production,
-		// 	// we'll extract any component CSS out into
-		// 	// a separate file — better for performance
-		// 	css: css => {
-		// 		css.write('public/components.css');
-		// 	}
-		// }),
 		svelte({
 			preprocess: autoPreprocess({
 				postcss: true,
@@ -85,20 +72,33 @@ export default {
 			dev: !production,
 			// we'll extract any component CSS out into
 			// a separate file — better for performance
-			...(!hot && {
-				css: css => {
-					css.write('public/build/bundle.css')
-				},
-			}),
-			hot: hot && {
-				// optimistic will try to recover from runtime
-				// errors during component init
-				optimistic: true,
-				// turn on to disable preservation of local component
-				// state -- i.e. non exported `let` variables
-				noPreserveState: false,
-			},
+			css: css => {
+				css.write('public/components.css');
+			}
 		}),
+		// svelte({
+		// 	preprocess: autoPreprocess({
+		// 		postcss: true,
+		// 		scss: true
+		// 	}),
+		// 	// enable run-time checks when not in production
+		// 	dev: !production,
+		// 	// we'll extract any component CSS out into
+		// 	// a separate file — better for performance
+		// 	...(!hot && {
+		// 		css: css => {
+		// 			css.write('public/build/bundle.css')
+		// 		},
+		// 	}),
+		// 	hot: hot && {
+		// 		// optimistic will try to recover from runtime
+		// 		// errors during component init
+		// 		optimistic: true,
+		// 		// turn on to disable preservation of local component
+		// 		// state -- i.e. non exported `let` variables
+		// 		noPreserveState: false,
+		// 	},
+		// }),
 		hot && autoCreate({
 			include: 'src/**/*',
 			// Set false to prevent recreating a file that has just been
@@ -121,10 +121,10 @@ export default {
 			browser: true,
 			dedupe: importee => importee === 'svelte' || importee.startsWith('svelte/')
 		}),
-		// postcss({
-		// 	extract: 'public/utils.css'
-		// }),
-		// sass(),
+		postcss({
+			extract: 'public/utils.css'
+		}),
+		sass(),
 
 		commonjs(),
 		// Watch the `public` directory and refresh the

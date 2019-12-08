@@ -1,5 +1,5 @@
 {
-    "name": "svelte-filerouter",
+    "name": "svelte-numl-admin",
     "routes": [{
         "src": "/[^\\.]+",
         "dest": "/index.html"

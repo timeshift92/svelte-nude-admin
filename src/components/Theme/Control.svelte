@@ -22,7 +22,6 @@
 
 <script>
   import { onMount } from 'svelte'
-  debugger
   onMount(() => {
     const schemeWidget = Nude.getElementById('prefers-color-scheme')
     const contrastWidget = Nude.getElementById('prefers-contrast')

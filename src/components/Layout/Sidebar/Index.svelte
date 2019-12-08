@@ -63,7 +63,7 @@
 
 	$:{
 		if(width >800 ){
-			// debugger;
+			debugger;
 		}
 	}
   onMount(() => {
