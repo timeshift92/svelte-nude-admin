@@ -1,0 +1,9 @@
+.DS_Store
+node_modules
+public/bundle.*
+public/bundle/**
+public/build/**
+.history
+node_modules
+yarn.lock
+package-lock.json

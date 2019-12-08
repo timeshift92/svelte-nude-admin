@@ -1,0 +1,7 @@
+{
+    "name": "svelte-filerouter",
+    "routes": [{
+        "src": "/[^\\.]+",
+        "dest": "/index.html"
+    }]
+}

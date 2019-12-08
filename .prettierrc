@@ -1,0 +1,14 @@
+{
+	"tabWidth": 2,
+	"printWidth": 80,
+	"semi": false,
+	"singleQuote": true,
+	"trailingComma": "es5",
+	"plugins": [
+		"svelte"
+	],
+	"svelteSortOrder": "markup-scripts-styles",
+	"svelteStrictMode": false,
+	"svelteBracketNewLine": false,
+	"svelteAllowShorthand": true
+}
