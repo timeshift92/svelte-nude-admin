@@ -1,9 +1,27 @@
 <nu-btngroup value={selectedPage}>
-  <nu-btn disabled={offset === 0} on:click={e => (offset === 0 ? '' : handleChange('dec'))}>Prev</nu-btn>
+  <nu-btn {...offset === 0 ? { disabled: 'true' } : {}} on:click={e => (offset === 0 ? '' : handleChange('dec'))}>
+    Prev
+  </nu-btn>
+  <nu-btn value={1} on:click={() => handleChange('next', 1)}>1</nu-btn>
+  {#if selectedPage >= pageSize}
+    <nu-btn disabled>...</nu-btn>
+  {/if}
   {#each pages as pg}
-    <nu-btn value={pg} on:click={() => (selectedPage === pg ? '' : handleChange('next', pg))}>{pg}</nu-btn>
+    <nu-btn checked={isCurrent(pg)} value={pg} on:click={() => (selectedPage === pg ? '' : handleChange('next', pg))}>
+      {pg}
+    </nu-btn>
   {/each}
-  <nu-btn disabled={offset + limit > total} on:click={e => (offset + limit > total ? '' : handleChange())}>Next</nu-btn>
+
+  {#if selectedPage <= tmpPages.length - 5}
+    <nu-btn disabled>...</nu-btn>
+    <nu-btn value={tmpPages.length} on:click={() => handleChange('next', tmpPages.length)}>{tmpPages.length}</nu-btn>
+  {/if}
+
+  <nu-btn
+    {... selectedPage  === tmpPages.length? { disabled: 'true' } : {}}
+    on:click={e => (offset + limit > total ? '' : handleChange())}>
+    Next
+  </nu-btn>
 </nu-btngroup>
 
 <script>
@@ -12,6 +30,7 @@
   const dispatch = createEventDispatcher()
   let selectedPage = 1
   function handleChange(type = 'inc', page) {
+    selectedPage = page
     if (type === 'dec' && offset > 0) {
       offset = offset - limit
     }
@@ -27,12 +46,15 @@
   export let total = 0
   export let limit = 5
   export let offset = 0
-
+  export let pageSize = 5
   let pages = []
+  let tmpPages = []
 
   $: {
     const length = Math.ceil(total / limit)
-    pages = Array.apply(null, { length }).map((p, i) => ++i)
+    tmpPages = Array.apply(null, { length }).map((p, i) => ++i)
+    const page = offset / limit
+    pages = tmpPages.slice(page <= pageSize - 2 ? 1 : page - 3, offset / limit + pageSize)
   }
 
   $: isCurrent = page => {
