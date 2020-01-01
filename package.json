@@ -19,28 +19,29 @@
     "svelte": "^3.16.0"
   },
   "dependencies": {
+    "@sveltech/routify": "^1.0.1-16",
     "chart.js": "^2.9.3",
     "cross-env": "^6.0.3",
+    "graphql-svelte": "^1.0.21",
     "livereload": "^0.8.2",
-    "node": "^13.3.0",
-    "numl": "^0.8.13",
+    "nollup": "^0.9.0",
+    "numl": "^0.9.4",
     "postcss-load-config": "^2.1.0",
     "prettier-plugin-svelte": "^0.7.0",
     "rollup-plugin-generate-html-template": "^1.6.0",
     "rollup-plugin-hot": "^0.0.8",
     "rollup-plugin-import-resolver": "^1.0.4",
-    "rollup-plugin-svelte-hot": "^0.1.0",
-    "sass": "^1.23.7",
+    "rollup-plugin-svelte-hot": "^0.1.1",
+    "sass": "^1.24.0",
     "sirv-cli": "^0.4.5",
-    "svelte-filerouter": "^1.4.6",
-    "svelte-preprocess": "^3.2.6"
+    "svelte-preprocess": "^3.3.0"
   },
   "scripts": {
-    "dev:nollup": "cross-env NOLLUP=1 nollup -c --hot --port 5000 --content-base ./public",
     "build": "rollup -c",
-    "autobuild": "rollup -c -w",
-    "dev": "run-p start:dev autobuild",
-    "start": "sirv public --single",
-    "start:dev": "sirv public --single --dev"
+    "dev:rollup": "rollup -c -w",
+    "dev:livereload": "cross-env LIVERELOAD=1 rollup -c -w",
+    "dev:nollup": "cross-env NOLLUP=1 nollup -c --hot --port 5000 --content-base ./public",
+    "dev": "npm run dev:rollup",
+    "start": "sirv public"
   }
 }

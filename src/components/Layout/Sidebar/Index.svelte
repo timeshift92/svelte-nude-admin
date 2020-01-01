@@ -1,6 +1,6 @@
 {#if $expanded}
   <nu-block
-    place="||fixed"
+    place="fixed cover"
     on:click={change}
     display="none|block|block"
     fill="rgba(1,1,1,0.5)"
@@ -9,36 +9,39 @@
     background="red"
     z="front" />
 {/if}
-
 <nu-menu
+  class:sidebar={true}
+  scrollbar
+  id="sidebar"
+  style="postion:inherit"
   color
-  fill
+  fill="subtle"
   theme="main"
-  height="100%"
+  height="103vh"
   z="front"
-  place="||fixed"
-  overflow={$expanded ? 'scroll-x' : 'yes|yes|no'}
+  place="|fixed|fixed"
+  overflow="yes :pressed:[scroll-y]|no :pressed[scroll-y]"
   area="span 12"
   border
-	display='||none #sidebar:pressed[none]'
-	bind:clientWidth={width}
-  width="{ $progress + 70}px||{$progress}px"
+  bind:clientWidth={width}
+  width="{$progress + 70}px|{$progress}px"
   {...$expanded ? { 'nu-pressed': true } : {}}>
   <nu-heading padding="1" text="center w6" level="4">
-    <nu-el hide={$expanded ? 'no' : 'yes'}>{brand.name}</nu-el>
-    <nu-el hide={$expanded ? 'yes' : 'no'}>{brand.short_name}</nu-el>
+    <nu-block hide="yes #sidebar:pressed[no]" transition="all 1.5s">
+      <a href={brand.url}>{brand.name}</a>
+    </nu-block>
+    <nu-block hide="no #sidebar:pressed[yes]" transition="all 1.5s">
+      <a href={brand.url}>{brand.short_name}</a>
+    </nu-block>
   </nu-heading>
   {#each sidebar as list}
-    <nu-heading
-      hide={$expanded ? 'no' : 'yes'}
-      padding="1"
-      text=" w1"
-      level="6">
+    <nu-heading hide="yes #sidebar:pressed[no]" transition="all 1.5s ease-out" padding="1" text=" w1" level="6">
       {list.name}
     </nu-heading>
     <List items={list.items} />
   {/each}
 </nu-menu>
+
 <script context="module">
   import { expanded } from '../store.js'
 
@@ -49,7 +52,6 @@
   expanded.subscribe(c => {
     !c ? progress.set(0) : progress.set(300)
   })
-
 </script>
 
 <script>
@@ -59,20 +61,22 @@
   import { change, addRememovePressedAttribute } from '../helper.js'
   import { tweened } from 'svelte/motion'
   import { cubicOut } from 'svelte/easing'
-	let width
+  import { applyEffect } from 'RevealEffect'
+  let width
 
-	$:{
-		if(width >800 ){
-			debugger;
-		}
-	}
   onMount(() => {
     width = document.body.clientWidth
+    applyEffect('.sidebar', {
+      clickEffect: true,
+      // lightColor: 'rgba(255,255,255,0.9)',
+      gradientSize: 80,
+      isContainer: true,
+      children: {
+        borderSelector: 'nu-menuitem',
+        elementSelector: '.btn',
+        // lightColor: 'rgba(255,255,255,0.3)',
+        gradientSize: 'auto',
+      },
+    })
   })
 </script>
-
-<style>
-  nu-menu {
-    max-width: 370px;
-  }
-</style>

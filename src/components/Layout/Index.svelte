@@ -1,11 +1,13 @@
-<nu-flex responsive="1280px|960px|640px" flow="row" >
+<nu-flex transition="all 1.5s" overflow="no" responsive="1280px|960px|640px" flow="row" height="100vh">
   <nu-theme hue="250" saturation="auto" padding=".5" border-radius=".5" border-width="1px" animation-time="0.08s" />
-  <nu-theme name="violet" from="#6777ef"></nu-theme>
+  <nu-theme name="violet" hue="277" />
 
   <Sidebar />
-  <nu-grid width="100%" low="column" rows="70px 1fr">
+  <nu-grid overflow="no" width="100%" low="column" rows="70px 1fr">
     <Header />
-    <slot><!-- optional fallback --></slot>
+    <slot>
+      <!-- optional fallback -->
+    </slot>
 
   </nu-grid>
 </nu-flex>
@@ -14,4 +16,12 @@
   import Header from './Header.svelte'
   import Sidebar from './Sidebar'
   import Body from './Body.svelte'
+
+
 </script>
+
+<style>
+  :global(body) {
+    overflow: hidden;
+  }
+</style>

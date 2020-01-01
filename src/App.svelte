@@ -1,11 +1,7 @@
-<style>
-	:global(body) {
-		display: grid;
-	}
-</style>
-
 <script>
-  import { Router } from 'svelte-filerouter'
+
+	import { Router } from "@sveltech/routify";
+	import { routes } from "@sveltech/routify/tmp/routes";
 </script>
 
-<Router />
+<Router {routes} />

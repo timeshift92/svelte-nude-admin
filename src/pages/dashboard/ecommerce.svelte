@@ -1584,5 +1584,6 @@
     return Math.round(Math.random() * 100)
   }
   import Section from 'co/Base/Section'
-  export let route
+  export let scoped
+  export let route = scoped.route
 </script>

@@ -5,19 +5,32 @@
   overflow="no"
   height="{startHeight}; #block:pressed[{height}px] {!$expanded ? `#block:hover[${height}px]` : ''}"
   shadow="none"
+  gap="2px"
+  display="flex"
   border="0">
   {#each items as item}
     <nu-menuitem
-      on:click={() => go(item.url)}
+      {...active($isActive(item.url)) ? { 'nu-pressed': true } : {}}
+      border="0"
+      role="link"
       content="center"
-      text="center w1">
-      <!-- <nu-link to="{item.url}">{item.name}</nu-link> -->
+      place="center">
+      <a href={item.url} tabindex="-1">{''}</a>
       {item.name}
     </nu-menuitem>
   {/each}
 </nu-menu>
 
 <script>
+  import { isActive, url } from '@sveltech/routify'
+
+  import { createEventDispatcher } from 'svelte'
+  const dispatch = createEventDispatcher()
+  function active(state) {
+    dispatch('active', state)
+    return state
+  }
+
   import { go } from '../helper.js'
   import { onMount } from 'svelte'
   import { expanded } from '../store'

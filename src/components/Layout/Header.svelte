@@ -3,6 +3,7 @@
   <nu-block place="center">MENU</nu-block>
 </nu-flex>
 
+
 <script>
   import { change } from './helper'
 </script>

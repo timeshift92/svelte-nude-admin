@@ -1,0 +1,5 @@
+
+{
+  "contentBase": "./public",
+  "historyApiFallback": true
+}
