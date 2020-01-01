@@ -126,23 +126,23 @@ mutation ($id: Int, $article: String, $charge: float8, $rest: Int, $category_id:
 `;
 
 queries.PRODUCTS = `
- query($id:Int,$user_id:uuid,$locales_id:Int,$slug:String,$limit: Int, $offset: Int){
-  products_aggregate {
+query ($id: Int, $name: String, $brandName: String, $user_id: uuid, $locales_id: Int, $slug: String, $limit: Int, $offset: Int) {
+  products_aggregate(where: {brand: {name: {_ilike: $brandName}}, product_locales: {name: {_ilike: $name}}, id: {_eq: $id}, categories_products: {category: {slug: {_eq: $slug}}}}) {
     aggregate {
       count
     }
   }
-    products(order_by:{id:desc},limit: $limit, offset: $offset, where:{id:{_eq:$id},categories_products:{category:{slug:{_eq:$slug}}}}){
-        id
-        rest
-        article
-      charge
-        product_locales(where:{locales_id:{_eq:$locales_id}}) {
-          name
-          description
-        }
-        product_colors{
-          color {
+  products(order_by: {id: desc}, limit: $limit, offset: $offset, where: {brand: {name: {_ilike: $brandName}}, product_locales: {name: {_ilike: $name}}, id: {_eq: $id}, categories_products: {category: {slug: {_eq: $slug}}}}) {
+    id
+    rest
+    article
+    charge
+    product_locales(where: {locales_id: {_eq: $locales_id}}) {
+      name
+      description
+    }
+    product_colors {
+      color {
         code
         slug
         id
@@ -150,43 +150,43 @@ queries.PRODUCTS = `
           name
         }
       }
-        }
-        favorites(where:{user_id:{_eq:$user_id}, product_id:{_eq:$id}},limit:1){
-          product_id
-        }
-        product_images {
-          id
-        alt
-        name
-        image
-        is_main
-        }
-        price
-        old_price
-        rating
-    		categories_products {
-          category_id
-          category{
-            category_locales{
-              name
-            }
-          }
-        }
-        discount
-        brand {
-          id
+    }
+    favorites(where: {user_id: {_eq: $user_id}, product_id: {_eq: $id}}, limit: 1) {
+      product_id
+    }
+    product_images {
+      id
+      alt
+      name
+      image
+      is_main
+    }
+    price
+    old_price
+    rating
+    categories_products {
+      category_id
+      category {
+        category_locales {
           name
         }
-        brand_id
-        categories_products {
-          category {
-            id
-            slug
-            category_locales {
-              name
-            }
-          }
+      }
+    }
+    discount
+    brand {
+      id
+      name
+    }
+    brand_id
+    categories_products {
+      category {
+        id
+        slug
+        category_locales {
+          name
         }
+      }
+    }
   }
 }
 `;

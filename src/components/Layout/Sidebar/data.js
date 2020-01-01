@@ -13,7 +13,7 @@ export let sidebar = [
 				icon: 'command',
 				items: [
 					{
-						url: '/dashboard/general',
+						url: '/dashboard/index',
 						name: 'General Dashboard',
 					},
 					{
@@ -29,12 +29,10 @@ export let sidebar = [
 		items: [
 			{
 				name: 'Layout',
-				active: true,
 				icon: 'columns',
 				items: [
 					{
-						url: '/layout',
-						active: true,
+						url: '/layout/index',
 						name: 'Default Layout',
 					},
 					{
@@ -399,19 +397,19 @@ export let sidebar = [
 				],
 			},
 			{
-				name: 'Utilities',
-				icon: 'more-horizontal',
+				name: 'Settings',
+				icon: 'settings',
 				items: [
 					{
-						url: '/utilities/contact',
-						name: 'Contact',
+						url: '/settings/theme',
+						name: 'theme',
 					},
 					{
-						url: '/utilities/invoice',
+						url: '/settings/invoice',
 						name: 'Invoice',
 					},
 					{
-						url: '/utilities/subscribe',
+						url: '/settings/subscribe',
 						name: 'Subscribe',
 					},
 				],

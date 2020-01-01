@@ -16,7 +16,7 @@
     "rollup-plugin-svelte": "^5.1.1",
     "rollup-plugin-terser": "^5.1.2",
     "rollup-pluginutils": "^2.8.2",
-    "svelte": "^3.16.0"
+    "svelte": "^3.16.7"
   },
   "dependencies": {
     "@sveltech/routify": "^1.0.1-16",

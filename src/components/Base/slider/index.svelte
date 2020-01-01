@@ -1,39 +1,41 @@
-<script>
-  let name = "world";
-  import { fade, fly } from "svelte/transition";
-  export let images = [];
-  let selected = images[0];
-  const click = image => {
-    selected = false;
-    setTimeout(() => {
-      selected = image;
-    }, 25);
-  };
-</script>
-
-<div class="bg-yellow-600 flex ">
-  <div class="w-8/12 flex">
+<nu-flex height="100px" content="space-around">
+  <nu-flex place="center">
     {#if selected}
-      <img
+      <nu-img
+        width="100px"
+        height="100px"
         in:fly={{ y: 20, duration: 500 }}
         class="w-full h-full"
         src={selected.image}
         alt={selected.alt} />
     {:else}
-      <div class="bg-gray-600 w-full h-full flex items-center justify-center">
-        No image
-      </div>
+      <nu-block>No image</nu-block>
     {/if}
 
-  </div>
-  <!-- {#if images.lenght > 1} -->
-  <div
-    class="border flex flex-col flex-shrink w-4/12 justify-center items-center">
+  </nu-flex>
+  <nu-flex flow="column">
     {#each images as image}
-      <li on:click={() => click(image)} class="list-none cursor-pointer">
-        <img class="overflow-hidden " src={image.image} alt={image.alt} />
-      </li>
+      <nu-img
+        cursor="pointer"
+        on:click={() => click(image)}
+        width="25px"
+        height="25px"
+        class="overflow-hidden "
+        src={image.image}
+        alt={image.alt} />
     {/each}
-  </div>
-  <!-- {/if} -->
-</div>
+  </nu-flex>
+</nu-flex>
+
+<script>
+  let name = 'world'
+  import { fade, fly } from 'svelte/transition'
+  export let images = []
+  let selected = images[0]
+  const click = image => {
+    selected = false
+    setTimeout(() => {
+      selected = image
+    }, 25)
+  }
+</script>

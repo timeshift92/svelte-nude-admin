@@ -1,0 +1,78 @@
+version: '3.6'
+services:
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    labels:
+      - "traefik.frontend.rule=Host:pgadmin.${DOMAIN}"
+      - "traefik.port=80"
+    restart: unless-stopped
+  postgres:
+    image: postgres
+    restart: always
+    ports:
+    - "5432:5432"
+    environment:
+    - POSTGRES_DB=${DB_DATABASE}
+    - POSTGRES_USER=${DB_USERNAME}
+    - POSTGRES_PASSWORD=${DB_PASSWORD}
+    - PGDATA=./db-data6
+    volumes:
+    - ./db_data:/var/lib/postgresql/data
+    - ./backup/init.sql:/docker-entrypoint-initdb.d/init.sql
+  storage:
+    build: ./storage
+    restart: always
+    ports: 
+    - 7885:7885
+    volumes: 
+    - ./storage/images:/app/images
+  hasura-auth:
+    build:
+      context: ./auth
+    # image: hasura-auth
+    depends_on:
+      - "graphql-engine"
+    restart: always
+    ports:
+      - 4000:4000
+    environment:
+      PORT: ${PORT}
+      HASURA_GRAPHQL_ENDPOINT: http://graphql-engine:8080/v1/graphql
+      HASURA_GRAPHQL_ADMIN_SECRET: "${HASURA_GRAPHQL_ADMIN_SECRET}" # change this with your strong password
+      JWT_ALGORITHM: HS256
+      # change the jwt private key
+      JWT_PRIVATE_KEY: l4V_LCQtf0RM7WE1uxgySq87Vm7ACi46IEg41WsRxlfWgX22YBJPi_6DvjEZC7ayAa2IpvJ0qFyilArppv9124WM96rwfCfmLf8uyyPWzOtFZAMazhQTS5T9EzdJ5OzagGMzfo_b_Hvx2xLi727KlXfnMNj242n-kK4vD6hvdqzikj4w6XxRF5nf9o4FJ6X4WS8c9H-o358dg26rp_ZN843e3k_cvUBdVs9C_4Wv39We0FPVv_CnVnMneAyCut7ZVeuDsbhGOy2NX6I3XJHQlRYAsG8eUSJhjGyTlw8MpbX-9Yxc99o8w17VP96LvIumtM_Pw1oNMN_TRs6alrr5VQ
+      REFRESH_TOKEN_EXPIRES_IN: 54000
+  graphql-engine:
+    image: hasura/graphql-engine:v1.0.0-beta.10.cli-migrations
+    depends_on:
+    - "postgres"
+    restart: always
+    labels:
+      - "traefik.frontend.rule=Host:graphql.${DOMAIN}"
+      - "traefik.port=8080"
+    command:
+      - graphql-engine
+      - serve
+    ports:
+      - 8082:8080
+    # volumes:
+      # - ./migrations:/hasura-migrations
+    environment:
+      HASURA_GRAPHQL_ENABLED_APIS: metadata,graphql,pgdump
+      HASURA_GRAPHQL_CONSOLE_ASSETS_DIR: /srv/console-assets
+      HASURA_GRAPHQL_DATABASE_URL: "${DB_DATABASE_URL}"
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
+      ## uncomment next line to set an admin secret
+      HASURA_GRAPHQL_AUTH_HOOK: http://hasura-auth:4000/hook
+      HASURA_GRAPHQL_ADMIN_SECRET: "${HASURA_GRAPHQL_ADMIN_SECRET}"
+volumes:
+  db_data:
+  backup:
+

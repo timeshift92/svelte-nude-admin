@@ -1,14 +1,12 @@
 <nu-rowgroup>
   {#each rows as row}
-    <nu-row fill=":even[subtle]" place="center">
+    <nu-row transform="none" place="center">
       {#each columns as col}
-        <nu-cell border="1x" fill=" :hover[red]" text="center">
+        <nu-cell border="1x"  text="center">
           {#if typeof row[col.name] == 'function'}
             <svelte:component this={row[col.name]} />
           {:else if col.name.indexOf('image') != -1}
-            <nu-block height="200px" width="200px">
-              <!-- <Slider images={row[col]} /> -->
-            </nu-block>
+              <Slider images={row[col.name]} />
           {:else if typeof row[col.name] == 'object'}
             {getRow(row, col.name)}
           {:else if  col.name.indexOf('actions') !=-1 }

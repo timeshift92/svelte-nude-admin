@@ -1,5 +1,6 @@
 {#if routes.length > 1}
   <nu-block text="i">
+
     {#each routes as rt, index}
       {#if index != count}
         <nu-link to={getRoute(index)} theme="violet" fill color>

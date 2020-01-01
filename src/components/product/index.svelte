@@ -7,12 +7,34 @@
   const data = {
     queryName: 'PRODUCTS',
     limit: 15,
+    filters: [
+      {
+        type: 'text',
+        path: 'product_locales',
+        name: 'name',
+        value: '',
+        placeholder: 'Название',
+      },
+      {
+        type: 'text',
+        name: 'brandName',
+        path: 'brand',
+        value: '',
+        placeholder: 'Название Бренда',
+      },
+    ],
     columns: [
-      { name: 'id',  title: 'Ид' },
+      { name: 'id', title: 'Ид', },
       { name: 'rest', title: 'Остаток' },
       { name: 'product_locales', title: 'Название' },
+      { name: 'product_images', title: 'Изображени' },
     ],
     componentProps: [
+      {
+        type: 'hidden',
+        name: 'locales_id',
+        value: 1,
+      },
       {
         type: 'text',
         name: 'name',
@@ -29,12 +51,7 @@
         placeholder: 'Описание',
       },
       {
-        type: 'number',
-        name: 'price',
-        label: 'Цена',
-        placeholder: 'Цена',
-      },
-      {
+        group: 'text',
         type: 'text',
         name: 'article',
         label: 'Артикул | модель',
@@ -42,48 +59,17 @@
       },
       {
         type: 'number',
+        name: 'price',
+        label: 'Цена',
+        placeholder: 'Цена',
+      },
+
+      {
+        type: 'number',
         name: 'old_price',
         label: 'Старая цена',
         placeholder: 'Старая цена',
       },
-      {
-        type: 'select',
-        name: 'brand_id',
-        label: 'Бренд',
-        placeholder: 'Выберите бренд',
-        data: {
-          preload: type => query('BRANDS'),
-          name: 'BRANDS',
-        },
-      },
-      {
-        type: 'select',
-        name: 'color_id',
-        path: 'product_colors',
-        multiple: true,
-        label: 'Цвет',
-        placeholder: 'Выберите Цвет',
-        data: {
-          preload: type => query('COLORS'),
-          fieldName: 'color_locales.name',
-          filter: 'color_id',
-          name: 'COLORS',
-        },
-      },
-      {
-        type: 'select',
-        name: 'category_id',
-        path: 'categories_products',
-        label: 'Категория',
-        placeholder: 'Выберите категория',
-        data: {
-          preload: type => query('CATEGORIES'),
-          fieldName: 'category_locales.name',
-
-          name: 'CATEGORIES',
-        },
-      },
-
       {
         type: 'number',
         name: 'discount',
@@ -102,13 +88,51 @@
       {
         type: 'number',
         name: 'rest',
-
         value: 5,
         label: 'Остаток',
         placeholder: 'Остаток',
       },
       {
-        type: 'file',
+        type: 'dropdown',
+        name: 'brand_id',
+        label: 'Бренд',
+        placeholder: 'Выберите бренд',
+        data: {
+          preload: type => query('BRANDS'),
+          name: 'BRANDS',
+        },
+      },
+      {
+        type: 'dropdown',
+        name: 'color_id',
+        path: 'product_colors',
+        multiple: true,
+        label: 'Цвет',
+        placeholder: 'Выберите Цвет',
+        data: {
+          preload: type => query('COLORS'),
+          fieldName: 'color_locales.name',
+          filter: 'color_id',
+          name: 'COLORS',
+        },
+      },
+      {
+        type: 'dropdown',
+        name: 'category_id',
+        path: 'categories_products',
+        label: 'Категория',
+        placeholder: 'Выберите категория',
+        data: {
+          preload: type => query('CATEGORIES'),
+          fieldName: 'category_locales.name',
+
+          name: 'CATEGORIES',
+        },
+      },
+
+      {
+        column: 'span 3',
+        type: 'image',
         name: 'images',
         label: 'Изображение',
         placeholder: 'Изображение',

@@ -11,7 +11,7 @@
   border="0">
   {#each items as item}
     <nu-menuitem
-      {...active($isActive(item.url), item.name) ? { 'nu-pressed': true } : {}}
+      {...active($isActive(item.url)) ? { 'nu-pressed': true } : {}}
       border="0"
       role="link"
       content="center"
@@ -37,6 +37,7 @@
   import { go } from '../helper.js'
   import { onMount, createEventDispatcher } from 'svelte'
   import { expanded } from '../store'
+
   const dispatch = createEventDispatcher()
   let pressed = false
   onMount(() => {
@@ -44,12 +45,12 @@
     startHeight = 0
   })
 
-  function active(state, name) {
+  function active(state) {
     invalidate()
     if (state && menu) {
       setTimeout(() => {
         if (!menu.getAttribute('nu-pressed')) menu.click()
-      }, 15)
+      }, 50)
     }
     return state
   }
@@ -57,7 +58,10 @@
   export let height = 0
   export let hide = 'no'
   export let menu
-  export let type = 'pressed'
+	export let type = 'pressed'
+	
+
   let child
-  export let items = []
+	export let items = []
+
 </script>

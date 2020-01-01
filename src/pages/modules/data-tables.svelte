@@ -1,0 +1,14 @@
+<Section {route} {header} title='Table with api'>
+  <Product />
+</Section>
+
+<script>
+  let header = {
+    title: 'Table example',
+    body: 'fetching data in api',
+  }
+  import Product from 'co/product'
+  import Section from 'co/Base/Section'
+    export let scoped
+  export let route = scoped.route
+</script>
