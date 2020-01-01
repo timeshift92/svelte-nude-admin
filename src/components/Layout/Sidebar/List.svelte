@@ -5,11 +5,8 @@
     flow="column"
     items="center #sidebar:pressed[inherit]"
     place="center :pressed[inherit]"
-    display="flex "
-    {...pressed ? { 'nu-pressed': true } : {}}
-		>
+    display="flex">
     <nu-menuitem
-      {...pressed ? { 'nu-pressed': true } : {}}
       bind:this={menu}
       id="item"
       width="50% #sidebar:pressed[auto] :pressed[; box-shadow:3px 5px 4px rgba(1,1,1,0.8);]"
@@ -30,10 +27,11 @@
         <nu-icon hide="yes #sidebar:pressed[no]" />
       {/if}
     </nu-menuitem>
-    {#if $expanded}
-      <Item on:active={e => console.log(e.detail) } {startHeight} items={item.items} />
-    {:else if item.items && item.items.length > 0}
+    {#if menu}
+      <Item {menu} hide="yes #sidebar:pressed[no]" {startHeight} items={item.items} />
       <nu-block
+        {menu}
+        hide="no #sidebar:pressed[yes]"
         scrollbar
         fill
         color
@@ -42,9 +40,10 @@
         padding="0 0 0 8px"
         shadow="10px"
         place="outside-right top">
-        <Item {startHeight} items={item.items} />
+        <Item type="hover" {startHeight} items={item.items} />
       </nu-block>
     {/if}
+
   </nu-block>
 {/each}
 
@@ -54,17 +53,15 @@
   import { onMount } from 'svelte'
 
   function handleClick(e) {
-    addRememovePressedAttribute(e.currentTarget.parentNode)
+    addRemovePressedAttribute(e.currentTarget.parentNode)
   }
+
   let startHeight = 'auto'
 
-  setTimeout(() => {
-    startHeight = 0
-  }, 50)
   let height
   let menu
-  let pressed = false
-  import { addRememovePressedAttribute } from '../helper.js'
+
+  import { addRemovePressedAttribute } from '../helper.js'
   import Item from './Item.svelte'
   export let items = []
 </script>

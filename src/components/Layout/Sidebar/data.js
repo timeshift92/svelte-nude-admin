@@ -28,114 +28,111 @@ export let sidebar = [
 		name: 'Starter',
 		items: [
 			{
-				url: '',
 				name: 'Layout',
 				active: true,
 				icon: 'columns',
 				items: [
 					{
-						url: '/dashboard/layout',
+						url: '/layout',
 						active: true,
 						name: 'Default Layout',
 					},
 					{
-						url: '/dashboard/layout/transparent',
+						url: '/layout/transparent',
 						name: 'Transparent Sidebar',
 					},
 					{
-						url: '/dashboard/layout/top',
+						url: '/layout/top',
 						name: 'Top Navigation',
 					},
 				],
 			},
 			{
-				url: '',
 				name: 'Blank Page',
 				icon: 'square',
 			},
 			{
-				url: '',
 				name: 'Bootstrap',
 				icon: 'grid',
 				items: [
 					{
-						url: '/dashboard/bootstrap/alert',
+						url: '/bootstrap/alert',
 						name: 'Alert',
 					},
 					{
-						url: '/dashboard/bootstrap/badge',
+						url: '/bootstrap/badge',
 						name: 'Badge',
 					},
 					{
-						url: '/dashboard/bootstrap/breadcrumb',
+						url: '/bootstrap/breadcrumb',
 						name: 'Breadcrumb',
 					},
 					{
-						url: '/dashboard/bootstrap/buttons',
+						url: '/bootstrap/buttons',
 						name: 'Buttons',
 					},
 					{
-						url: '/dashboard/bootstrap/card',
+						url: '/bootstrap/card',
 						name: 'Card',
 					},
 					{
-						url: '/dashboard/bootstrap/carousel',
+						url: '/bootstrap/carousel',
 						name: 'Carousel',
 					},
 					{
-						url: '/dashboard/bootstrap/collapse',
+						url: '/bootstrap/collapse',
 						name: 'Collapse',
 					},
 					{
-						url: '/dashboard/bootstrap/dropdown',
+						url: '/bootstrap/dropdown',
 						name: 'Dropdown',
 					},
 					{
-						url: '/dashboard/bootstrap/form',
+						url: '/bootstrap/form',
 						name: 'Form',
 					},
 					{
-						url: '/dashboard/bootstrap/list-group',
+						url: '/bootstrap/list-group',
 						name: 'List Group',
 					},
 					{
-						url: '/dashboard/bootstrap/media-object',
+						url: '/bootstrap/media-object',
 						name: 'Media Object',
 					},
 					{
-						url: '/dashboard/bootstrap/modal',
+						url: '/bootstrap/modal',
 						name: 'Modal',
 					},
 					{
-						url: '/dashboard/bootstrap/nav',
+						url: '/bootstrap/nav',
 						name: 'Nav',
 					},
 					{
-						url: '/dashboard/bootstrap/navbar',
+						url: '/bootstrap/navbar',
 						name: 'Navbar',
 					},
 					{
-						url: '/dashboard/bootstrap/pagination',
+						url: '/bootstrap/pagination',
 						name: 'Pagination',
 					},
 					{
-						url: '/dashboard/bootstrap/popover',
+						url: '/bootstrap/popover',
 						name: 'Popover',
 					},
 					{
-						url: '/dashboard/bootstrap/progress',
+						url: '/bootstrap/progress',
 						name: 'Progress',
 					},
 					{
-						url: '/dashboard/bootstrap/table',
+						url: '/bootstrap/table',
 						name: 'Table',
 					},
 					{
-						url: '/dashboard/bootstrap/tooltip',
+						url: '/bootstrap/tooltip',
 						name: 'Tooltip',
 					},
 					{
-						url: '/dashboard/bootstrap/typography',
+						url: '/bootstrap/typography',
 						name: 'Typography',
 					},
 				],
@@ -146,64 +143,63 @@ export let sidebar = [
 		name: 'Stisla',
 		items: [
 			{
-				url: '',
 				name: 'Components',
 				icon: 'codesandbox',
 				items: [
 					{
-						url: '/dashboard/stisla/components/article',
+						url: '/stisla/components/article',
 						beep: true,
 						name: 'Article',
 					},
 					{
-						url: '/dashboard/stisla/components/avatar',
+						url: '/stisla/components/avatar',
 						name: 'Avatar',
 					},
 					{
-						url: '/dashboard/stisla/components/chat-box',
+						url: '/stisla/components/chat-box',
 						name: 'Chat Box',
 					},
 					{
-						url: '/dashboard/stisla/components/empty-state',
+						url: '/stisla/components/empty-state',
 
 						name: 'Empty State',
 					},
 					{
-						url: '/dashboard/stisla/components/gallery',
+						url: '/stisla/components/gallery',
 						name: 'Gallery',
 					},
 					{
-						url: '/dashboard/stisla/components/hero',
+						url: '/stisla/components/hero',
 
 						name: 'Hero',
 					},
 					{
-						url: '/dashboard/stisla/components/multiple-upload',
+						url: '/stisla/components/multiple-upload',
 						name: 'Multiple Upload',
 					},
 					{
-						url: '/dashboard/stisla/components/pricing',
+						url: '/stisla/components/pricing',
 
 						name: ' Pricing ',
 					},
 					{
-						url: '/dashboard/stisla/components/statistic',
+						url: '/stisla/components/statistic',
 						name: 'Statistic',
 					},
 					{
-						url: '/dashboard/stisla/components/tab',
+						url: '/stisla/components/tab',
 						name: 'Tab',
 					},
 					{
-						url: '/dashboard/stisla/components/table',
+						url: '/stisla/components/table',
 						name: 'Table',
 					},
 					{
-						url: '/dashboard/stisla/components/user',
+						url: '/stisla/components/user',
 						name: 'User',
 					},
 					{
-						url: '/dashboard/stisla/components/wizard',
+						url: '/stisla/components/wizard',
 
 						name: 'Wizard',
 					},
@@ -215,15 +211,15 @@ export let sidebar = [
 				icon: 'file',
 				items: [
 					{
-						url: '/dashboard/stisla/forms/advanced',
+						url: '/stisla/forms/advanced',
 						name: 'Advanced Form',
 					},
 					{
-						url: '/dashboard/stisla/forms/editor',
+						url: '/stisla/forms/editor',
 						name: 'Editor',
 					},
 					{
-						url: '/dashboard/stisla/forms/validation',
+						url: '/stisla/forms/validation',
 						name: 'Validation',
 					},
 				],
@@ -234,86 +230,85 @@ export let sidebar = [
 				icon: 'map',
 				items: [
 					{
-						url: '/dashboard/stisla/gmaps/advanced',
+						url: '/stisla/gmaps/advanced',
 						name: 'Advanced Route',
 					},
 					{
-						url: '/dashboard/stisla/gmaps/draggable-marker',
+						url: '/stisla/gmaps/draggable-marker',
 						name: 'Draggable Marker',
 					},
 					{
-						url: '/dashboard/stisla/gmaps/geocoding',
+						url: '/stisla/gmaps/geocoding',
 						name: 'Geocoding',
 					},
 					{
-						url: '/dashboard/stisla/gmaps/geolaction',
+						url: '/stisla/gmaps/geolaction',
 						name: 'Geolocation',
 					},
 					{
-						url: '/dashboard/stisla/gmaps/marker',
+						url: '/stisla/gmaps/marker',
 						name: 'Marker',
 					},
 					{
-						url: '/dashboard/stisla/gmaps/multiple-marker',
+						url: '/stisla/gmaps/multiple-marker',
 						name: 'Multiple Marker',
 					},
 					{
-						url: '/dashboard/stisla/gmaps/route',
+						url: '/stisla/gmaps/route',
 						name: 'Route',
 					},
 					{
-						url: '/dashboard/stisla/gmaps/simple',
+						url: '/stisla/gmaps/simple',
 						name: 'Simple',
 					},
 				],
 			},
 			{
-				url: '',
 				name: 'Modules',
 				icon: 'monitor',
 				items: [
 					{
-						url: '',
+						url: '/modules/calendar',
 						name: 'Calendar',
 					},
 					{
-						url: '',
+						url: '/modules/charts',
 						name: 'ChartJS',
 					},
 					{
-						url: '',
+						url: '/modules/data-tables',
 						name: 'DataTables',
 					},
 					{
-						url: '',
+						url: '/modules/flag',
 						name: 'Flag',
 					},
 					{
-						url: '',
+						url: '/modules/ion-icons',
 						name: 'Ion Icons',
 					},
 					{
-						url: '',
+						url: '/modules/owl-carousel',
 						name: 'Owl Carousel',
 					},
 					{
-						url: '',
+						url: '/modules/sparkline',
 						name: 'Sparkline',
 					},
 					{
-						url: '',
+						url: '/modules/sweet-alert',
 						name: 'Sweet Alert',
 					},
 					{
-						url: '',
+						url: '/modules/toastr',
 						name: 'Toastr',
 					},
 					{
-						url: '',
+						url: '/modules/vector-map',
 						name: 'Vector Map',
 					},
 					{
-						url: '',
+						url: '/modules/weather-icon',
 						name: 'Weather Icon',
 					},
 				],
@@ -329,102 +324,100 @@ export let sidebar = [
 				icon: 'user',
 				items: [
 					{
-						url: '',
+						url: '/pages/forgor-password',
 						name: 'Forgot Password',
 					},
 					{
-						url: '',
+						url: '/pages/login',
 						name: 'Login',
 					},
 					{
-						url: '',
+						url: '/pages/register',
 						name: 'Register',
 					},
 					{
-						url: '',
+						url: '/pages/reset-password',
 						name: 'Reset Password',
 					},
 				],
 			},
 			{
-				url: '',
+
 				name: 'Errors',
 				icon: 'alert-triangle',
 				items: [
 					{
-						url: '',
+						url: '/errors/503',
 						name: '503',
 					},
 					{
-						url: '',
+						url: '/errors/403',
 						name: '403',
 					},
 					{
-						url: '',
+						url: '/errors/404',
 						name: '404',
 					},
 					{
-						url: '',
+						url: '/errors/500',
 						name: '500',
 					},
 				],
 			},
 			{
-				url: '',
 				name: 'Features',
 				icon: 'gift',
 				items: [
 					{
-						url: '',
+						url: '/features/activities',
 						name: 'Activities',
 					},
 					{
-						url: '',
+						url: '/features/posts/create',
 						name: 'Post Create',
 					},
 					{
-						url: '',
+						url: '/features/posts',
 						name: 'Posts',
 					},
 					{
-						url: '',
+						url: '/features/profile',
 						name: 'Profile',
 					},
 					{
-						url: '',
+						url: '/features/settings',
 						name: 'Settings',
 					},
 					{
-						url: '',
+						url: '/features/settings/detail',
 						name: 'Setting Detail',
 					},
 					{
-						url: '',
+						url: '/features/tickets',
 						name: 'Tickets',
 					},
 				],
 			},
 			{
-				url: '',
 				name: 'Utilities',
 				icon: 'more-horizontal',
 				items: [
 					{
-						url: '',
+						url: '/utilities/contact',
 						name: 'Contact',
 					},
 					{
-						url: '',
+						url: '/utilities/invoice',
 						name: 'Invoice',
 					},
 					{
-						url: '',
+						url: '/utilities/subscribe',
 						name: 'Subscribe',
 					},
 				],
 			},
 			{
-				url: '',
+				url: '/credits',
 				name: 'Credits',
 				icon: 'pen-tool',
 			},

@@ -1,16 +1,17 @@
 <nu-menu
+  {...hide ? { hide: hide } : {}}
   padding="15px 0 0 0 "
   bind:this={child}
   transition="height .5s ease-out;"
   overflow="no"
-  height="{startHeight}; #block:pressed[{height}px] {!$expanded ? `#block:hover[${height}px]` : ''}"
+  height="{startHeight}; #block:{type}[{height}px]"
   shadow="none"
   gap="2px"
   display="flex"
   border="0">
   {#each items as item}
     <nu-menuitem
-      {...active($isActive(item.url)) ? { 'nu-pressed': true } : {}}
+      {...active($isActive(item.url), item.name) ? { 'nu-pressed': true } : {}}
       border="0"
       role="link"
       content="center"
@@ -21,26 +22,42 @@
   {/each}
 </nu-menu>
 
+<script context="module">
+  function invalidate() {
+    document.querySelectorAll("nu-menuitem[nu-id='item']").forEach(item => {
+      if (item.getAttribute('nu-pressed') != null) {
+        item.click()
+      }
+    })
+  }
+</script>
+
 <script>
   import { isActive, url } from '@sveltech/routify'
-
-  import { createEventDispatcher } from 'svelte'
-  const dispatch = createEventDispatcher()
-  function active(state) {
-    dispatch('active', state)
-    return state
-  }
-
   import { go } from '../helper.js'
-  import { onMount } from 'svelte'
+  import { onMount, createEventDispatcher } from 'svelte'
   import { expanded } from '../store'
+  const dispatch = createEventDispatcher()
+  let pressed = false
   onMount(() => {
-    height = child.scrollHeight
+    height = child.children.length * (child.children.length > 3 ? 44 : 50)
     startHeight = 0
   })
+
+  function active(state, name) {
+    invalidate()
+    if (state && menu) {
+      setTimeout(() => {
+        if (!menu.getAttribute('nu-pressed')) menu.click()
+      }, 15)
+    }
+    return state
+  }
   export let startHeight = 'auto'
   export let height = 0
-
+  export let hide = 'no'
+  export let menu
+  export let type = 'pressed'
   let child
   export let items = []
 </script>

@@ -1,14 +1,13 @@
-{#if $expanded}
-  <nu-block
-    place="fixed cover"
-    on:click={change}
-    display="none|block|block"
-    fill="rgba(1,1,1,0.5)"
-    width="||100%"
-    height="100%"
-    background="red"
-    z="front" />
-{/if}
+<nu-block
+  id="cover"
+  place="fixed cover"
+  on:click={change}
+  display="none|none :pressed[block]"
+  fill="rgba(1,1,1,0.5)"
+  width="||100%"
+  height="100%"
+  background="red"
+  z="front" />
 <nu-menu
   class:sidebar={true}
   scrollbar
@@ -24,8 +23,7 @@
   area="span 12"
   border
   bind:clientWidth={width}
-  width="{$progress + 70}px|{$progress}px"
-  {...$expanded ? { 'nu-pressed': true } : {}}>
+  width="{$progress + 70}px|{$progress}px">
   <nu-heading padding="1" text="center w6" level="4">
     <nu-block hide="yes #sidebar:pressed[no]" transition="all 1.5s">
       <a href={brand.url}>{brand.name}</a>
@@ -58,7 +56,7 @@
   import { onMount } from 'svelte'
   import List from './List.svelte'
   import { brand, sidebar } from './data.js'
-  import { change, addRememovePressedAttribute } from '../helper.js'
+  import { change, addRemovePressedAttribute } from '../helper.js'
   import { tweened } from 'svelte/motion'
   import { cubicOut } from 'svelte/easing'
   import { applyEffect } from 'RevealEffect'
