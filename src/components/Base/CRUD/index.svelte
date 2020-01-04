@@ -2,9 +2,7 @@
   <Spinner />
 {:then result}
   {setColumns(result.data[queryName.toLowerCase()])}
-  <Table
-    rows={result.data[queryName.toLowerCase()]}
-    withActions={data.withActions != undefined ? data.withActions : true}>
+  <Table rows={result.data[queryName.toLowerCase()]} withActions={data.withActions != undefined ? data.withActions : true}>
     <nu-row slot="filters" let:col={column}>
       <Filter columns={data.columns} filters={data.filters} on:filter={e => getData(e.detail)} />
     </nu-row>
@@ -22,13 +20,9 @@
         <Form formType="update" {handleClose} {row} cache={result} />
       </Modal>
     </nu-el>
-    <div slot="pagination" class="inline-block p-4"  >
+    <div slot="pagination" class="inline-block p-4">
       {#if data.limit && result.data[queryName.toLowerCase() + '_aggregate']}
-        <Pagination
-          on:change={() => getData()}
-          total={result.data[queryName.toLowerCase() + '_aggregate'].aggregate.count}
-          bind:limit={data.limit}
-          bind:offset />
+        <Pagination on:change={() => getData()} total={result.data[queryName.toLowerCase() + '_aggregate'].aggregate.count} bind:limit={data.limit} bind:offset />
       {/if}
     </div>
 
@@ -64,7 +58,7 @@
   import Delete from './Delete.svelte'
   import Modal from '../../../components/Base/Modal/index.svelte'
   import { setContext } from 'svelte'
-
+  import { columnsAdapter } from './queryTemplates/query.js'
   export let data
 
   queryName = data.queryName
@@ -72,26 +66,23 @@
 
   let offset = 0
   let limit = data.limit || 15
-
+  let request = columnsAdapter(queryName, data.columns).paginate(limit, offset)
   const getData = variables => {
     for (var key in variables) {
       if (variables[key] == '') {
         delete variables[key]
       }
     }
-    console.log(variables)
 
-    queryResult = query(queryName, {
-      offset,
-      limit,
-      ...variables,
+    data.filters.map(filter => {
+      if (variables[filter.name]) request = request.where({ [filter.path]: { [filter.name]: { [filter.operator]: variables[filter.name] } } }).paginate(limit, offset)
     })
-  }
+    console.log(data.filters)
 
-  let queryResult = query(queryName, {
-    offset,
-    limit,
-  })
+    queryResult = query(request.paginate(limit, offset).query())
+  }
+  // console.log(columnsAdapter(queryName,data.columns).query());
+  let queryResult = query(request.query())
 
   function setColumns(rows) {
     if (!data.columns && rows && rows.length > 0) {

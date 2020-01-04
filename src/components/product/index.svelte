@@ -5,19 +5,21 @@
   import { query } from 'api.js'
 
   const data = {
-    queryName: 'PRODUCTS',
+    queryName: 'products',
     limit: 15,
     filters: [
       {
         type: 'text',
-        path: 'product_locales',
+				path: 'product_locales',
+				operator:'_ilike',
         name: 'name',
         value: '',
         placeholder: 'Название',
       },
       {
         type: 'text',
-        name: 'brandName',
+				name: 'brandName',
+				operator:'_ilike',
         path: 'brand',
         value: '',
         placeholder: 'Название Бренда',
@@ -26,8 +28,8 @@
     columns: [
       { name: 'id', title: 'Ид', },
       { name: 'rest', title: 'Остаток' },
-      { name: 'product_locales', title: 'Название' },
-      { name: 'product_images', title: 'Изображени' },
+      { name: 'product_locales', fields:['name','description'], title: 'Название' },
+      { name: 'product_images',fields:['name','extension','image','alt','id','is_main'], title: 'Изображени' },
     ],
     componentProps: [
       {

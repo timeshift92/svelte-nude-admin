@@ -1,27 +1,17 @@
 <nu-btngroup value={selectedPage}>
-  <nu-btn {...offset === 0 ? { disabled: 'true' } : {}} on:click={e => (offset === 0 ? '' : handleChange('dec'))}>
-    Prev
-  </nu-btn>
-  <nu-btn value={1} on:click={() => handleChange('next', 1)}>1</nu-btn>
+  <nu-btn {...offset === 0 ? { disabled: 'true' } : {}} on:click={e => (offset === 0 ? '' : dec)}>Prev</nu-btn>
+  <nu-btn value={1} on:click={() => next(1)}>1</nu-btn>
   {#if selectedPage >= pageSize}
     <nu-btn disabled>...</nu-btn>
   {/if}
   {#each pages as pg}
-    <nu-btn checked={isCurrent(pg)} value={pg} on:click={() => (selectedPage === pg ? '' : handleChange('next', pg))}>
-      {pg}
-    </nu-btn>
+    <nu-btn checked={isCurrent(pg)} value={pg} on:click={e => next(pg)}>{pg}</nu-btn>
   {/each}
-
   {#if selectedPage <= tmpPages.length - 5}
     <nu-btn disabled>...</nu-btn>
-    <nu-btn value={tmpPages.length} on:click={() => handleChange('next', tmpPages.length)}>{tmpPages.length}</nu-btn>
+    <nu-btn value={tmpPages.length} on:click={() => next(tmpPages.length)}>{tmpPages.length}</nu-btn>
   {/if}
-
-  <nu-btn
-    {... selectedPage  === tmpPages.length? { disabled: 'true' } : {}}
-    on:click={e => (offset + limit > total ? '' : handleChange())}>
-    Next
-  </nu-btn>
+  <nu-btn {...selectedPage === tmpPages.length ? { disabled: 'true' } : {}} on:click={inc}>Next</nu-btn>
 </nu-btngroup>
 
 <script>
@@ -29,20 +19,26 @@
 
   const dispatch = createEventDispatcher()
   let selectedPage = 1
-  function handleChange(type = 'inc', page) {
-    selectedPage = page
-    if (type === 'dec' && offset > 0) {
-      offset = offset - limit
-    }
-    if (type === 'inc') {
-      offset = offset + limit
-    }
 
-    if (page) {
-      offset = (page - 1) * limit
+  function inc() {
+    if (offset + limit > total) {
+      offset = offset + limit
+      dispatch('change')
     }
+  }
+
+  function dec() {
+    if (offset !== 0) {
+      offset = offset - limit
+      dispatch('change')
+    }
+  }
+  function next(page) {
+    selectedPage = page
+    offset = (page - 1) * limit
     dispatch('change')
   }
+
   export let total = 0
   export let limit = 5
   export let offset = 0
