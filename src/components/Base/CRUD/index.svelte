@@ -78,8 +78,10 @@
       if (variables[filter.name]) request = request.where({ [filter.path]: { [filter.name]: { [filter.operator]: variables[filter.name] } } }).paginate(limit, offset)
     })
     console.log(data.filters)
+		debugger;
 
-    queryResult = query(request.paginate(limit, offset).query())
+    // queryResult = query(request.paginate(limit, offset).query())
+    queryResult = request.paginate(limit, offset).await()
   }
   // console.log(columnsAdapter(queryName,data.columns).query());
   let queryResult = query(request.query())
