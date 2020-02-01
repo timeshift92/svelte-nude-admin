@@ -16,4 +16,3 @@ export function columnsAdapter(schema, columns, callback = (field, relation) => 
 	return query;
 }
 
-

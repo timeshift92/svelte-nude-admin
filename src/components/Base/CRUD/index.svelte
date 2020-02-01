@@ -1,18 +1,18 @@
 {#await $queryResult}
   <Spinner />
 {:then result}
+	{data.rows.set(result.data[queryName.toLowerCase()])}
   {setColumns(result.data[queryName.toLowerCase()])}
   <Table rows={result.data[queryName.toLowerCase()]} withActions={data.withActions != undefined ? data.withActions : true}>
     <nu-row slot="filters" let:col={column}>
       <Filter columns={data.columns} filters={data.filters} on:filter={e => getData(e.detail)} />
     </nu-row>
-    <nu-el slot="create">
+    <nu-el slot="create" padding="1">
       <Modal let:handle={handleClose}>
         <Form {handleClose} cache={result} />
       </Modal>
     </nu-el>
     <nu-el slot="actions" let:id let:row>
-
       <Modal buttonName="Удалить" buttonColor="bg-red-500" let:handle={handleClose}>
         <Delete {handleClose} {id} cache={result} />
       </Modal>
@@ -52,15 +52,16 @@
   import { restore, query } from 'api.js'
   import { queries } from '../../../queries'
   import { beforeUpdate, onDestroy } from 'svelte'
-  import Table from '../../../components/Base/Table/index.svelte'
-  import Pagination from '../../../components/Base/Table/Pagination.svelte'
+  import Table from './table/Index.svelte'
+  import Pagination from './table/Pagination.svelte'
   import Form from './CreateUpdate.svelte'
   import Delete from './Delete.svelte'
-  import Modal from '../../../components/Base/Modal/index.svelte'
+  import Modal from './modal/index.svelte'
   import { setContext } from 'svelte'
+  import { writable } from 'svelte/store'
   import { columnsAdapter } from './queryTemplates/query.js'
   export let data
-
+	data.rows  = writable([])
   queryName = data.queryName
   queryParams = data.queryParams
 
@@ -74,11 +75,10 @@
       }
     }
 
-    data.filters.map(filter => {
-      if (variables[filter.name]) request = request.where({ [filter.path]: { [filter.name]: { [filter.operator]: variables[filter.name] } } }).paginate(limit, offset)
-    })
-    console.log(data.filters)
-		debugger;
+    if (variables)
+      data.filters.map(filter => {
+        if (variables[filter.name]) request = request.where({ [filter.path]: { [filter.name]: { [filter.operator]: variables[filter.name] } } }).paginate(limit, offset)
+      })
 
     // queryResult = query(request.paginate(limit, offset).query())
     queryResult = request.paginate(limit, offset).await()

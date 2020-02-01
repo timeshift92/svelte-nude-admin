@@ -3,34 +3,31 @@
 <script>
   import Crud from '../Base/CRUD/index.svelte'
   import { query } from 'api.js'
-
+  import Custom from './Custom.svelte'
+  import Slider from 'co/Base/slider'
   const data = {
     queryName: 'products',
     limit: 15,
-    filters: [
-      {
-        type: 'text',
-				path: 'product_locales',
-				operator:'_ilike',
-        name: 'name',
-        value: '',
-        placeholder: 'Название',
-      },
-      {
-        type: 'text',
-				name: 'brandName',
-				operator:'_ilike',
-        path: 'brand',
-        value: '',
-        placeholder: 'Название Бренда',
-      },
-    ],
     columns: [
-      { name: 'id', title: 'Ид', },
-      { name: 'rest', title: 'Остаток' },
-      { name: 'product_locales', fields:['name','description'], title: 'Название' },
-      { name: 'product_images',fields:['name','extension','image','alt','id','is_main'], title: 'Изображени' },
+      {
+        name: 'id',
+        title: 'Ид',
+        value: model => model.id,
+        filter: { type: 'text', path: 'product_locales', operator: '_ilike', name: 'name', value: '', placeholder: 'Название' },
+      },
+      { name: 'rest', title: 'Остаток', component: Custom },
+      { name: 'product_locales', fields: ['name', 'description'], value: row => row.product_locales[0].name, title: 'Название' },
+      {
+        name: 'product_images',
+        component: Slider,
+        props: row => ({
+          images: [...row.product_images],
+        }),
+        fields: ['name', 'extension', 'image', 'alt', 'id', 'is_main'],
+        title: 'Изображение',
+      },
     ],
+    actions: [{ name: 'create' }, { name: 'update' }, { name: 'custom', component: Custom }],
     componentProps: [
       {
         type: 'hidden',

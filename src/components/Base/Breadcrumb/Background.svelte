@@ -18,7 +18,7 @@
       icon: 'fas fa-list',
     },
   ]
-  let count = routes.length - 1
+	let count = routes.length - 1
 </script>
 
 <nav aria-label="breadcrumb">
