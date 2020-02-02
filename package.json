@@ -20,9 +20,11 @@
     "svelte": "^3.16.7"
   },
   "dependencies": {
-    "@sveltech/routify": "^1.0.1-50",
+    "@rollup/plugin-node-resolve": "^7.1.0",
+    "@sveltech/routify": "next",
     "chart.js": "^2.9.3",
     "cross-env": "^6.0.3",
+    "flatpickr": "^4.6.3",
     "graphql-svelte": "^1.1.6",
     "livereload": "^0.8.2",
     "nollup": "^0.9.0",
@@ -35,14 +37,21 @@
     "rollup-plugin-svelte-hot": "^0.1.1",
     "sass": "^1.24.0",
     "sirv-cli": "^0.4.5",
+    "svelte-flatpickr": "^2.4.0",
     "svelte-preprocess": "^3.3.0"
   },
   "scripts": {
     "build": "rollup -c",
+    "dev": "run-p watch:routify watch:rollup",
+    "dev:split": "run-p watch:routify:split watch:rollup",
+    "watch:rollup": "rollup -c -w",
+    "watch:routify": "routify",
+    "watch:routify:split": "routify -D",
+    "start": "sirv public --single",
+    "start:split": "sirv public --single dynamic.html",
     "dev:rollup": "rollup -c -w",
     "dev:livereload": "cross-env LIVERELOAD=1 rollup -c -w",
     "dev:nollup": "cross-env NOLLUP=1 nollup -c --hot --port 5000 --content-base ./public",
-    "dev": "npm run dev:rollup",
     "start": "sirv public"
   }
 }

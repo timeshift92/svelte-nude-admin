@@ -4,7 +4,9 @@
   import Crud from '../Base/CRUD/index.svelte'
   import { query } from 'api.js'
   import Custom from './Custom.svelte'
-  import Slider from 'co/Base/slider'
+  import DatePickerFilter from './DatePickerFilter.svelte'
+	import Slider from 'co/Base/slider'
+
   const data = {
     queryName: 'products',
     limit: 15,
@@ -25,7 +27,8 @@
           placeholder: 'Название',
         },
       },
-      { name: 'rest', title: 'Остаток', component: Custom },
+			{ name: 'rest', title: 'Остаток', component: Custom },
+			{ name: 'created_at', title: 'Создана', filter: {component: DatePickerFilter} },
       { name: 'product_locales', fields: ['name', 'description'], value: row => row.product_locales[0].name, title: 'Название' },
       {
         name: 'product_images',

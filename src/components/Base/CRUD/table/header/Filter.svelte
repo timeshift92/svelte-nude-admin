@@ -19,7 +19,10 @@
             }} />
         </nu-input>
       {/if}
+
     </nu-cell>
+  {:else}
+    <nu-cell />
   {/if}
 
 {/each}

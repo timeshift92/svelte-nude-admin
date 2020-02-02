@@ -4,7 +4,7 @@
   export let multiple = false;
 
   if (values && multiple) {
-    
+
     let vls = [];
     for (let i = 0; i < values.length; i++) {
        vls.push(values[i][data.name.toLowerCase().substr(0,data.name.length - 1)].id);
@@ -12,10 +12,9 @@
     value = vls;
   }
   export let depend;
-  export let id;
   $: preload = data.preload(depend);
 
- 
+
   const queryName = data.name;
 
   function getLabel(item) {
