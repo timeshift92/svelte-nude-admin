@@ -1,41 +1,42 @@
 {#each items as item,index}
   <nu-block
+		style="position:relative"
     padding=".5"
     id="block"
     flow="column"
-    items="center #sidebar:pressed[inherit]"
-    place="center :pressed[inherit]"
+    items="^#sidebar :pressed[inherit] center "
+    place=":pressed[inherit] center "
     display="flex">
     <nu-menuitem
       bind:this={menu[index]}
       id="item"
-      width="50% #sidebar:pressed[auto] :pressed[; box-shadow:3px 5px 4px rgba(1,1,1,0.8);]"
+      width="^#sidebar :pressed[auto] :pressed[; box-shadow:3px 5px 4px rgba(1,1,1,0.8);] 50% "
       fill
       color
       theme=" :pressed[violet special]"
       on:click={e => handleClick(e, item.url)}
       role="checkbox"
       items="center"
-      content="center #sidebar:pressed[space-between]">
-      <nu-icon padding="0 #sidebar:pressed[1]" name={item.icon} />
-      <nu-el to={item.url} padding="0" transition="all 1.5s ease-out" hide="yes #sidebar:pressed[no]">
+      content="^#sidebar :pressed[space-between] center ">
+      <nu-icon padding="^#sidebar :pressed[1] 0 " name={item.icon} />
+      <nu-el to={item.url} padding="0" transition="all 1.5s ease-out" hide="^#sidebar :pressed[no] yes ">
         {item.name}
       </nu-el>
       {#if item.items && item.items.length > 0}
-        <nu-icon hide="yes #sidebar:pressed[no]" name="chevron-down ^:pressed[chevron-up]" />
+        <nu-icon hide="^#sidebar :pressed[no] yes" name="^ :pressed[chevron-up] chevron-down" />
       {:else}
-        <nu-icon hide="yes #sidebar:pressed[no]" />
+        <nu-icon hide="^#sidebar :pressed[no] yes" />
       {/if}
     </nu-menuitem>
     {#if menu && menu[index]}
-      <Item   menu ={menu[index]} hide="yes #sidebar:pressed[no]" {startHeight} items={item.items} />
+      <Item   menu ={menu[index]} hide="^#sidebar :pressed[no] yes" {startHeight} items={item.items} />
       <nu-block
 				class:sidebar-hover={true}
-        hide="no #sidebar:pressed[yes]"
+        hide="^#sidebar :pressed[yes] no "
         scrollbar
         fill
         color
-        height="0 ^:hover[auto; max-height:300px]"
+        height="^ :hover[auto; max-height:300px] 0 "
         overflow="scroll-y"
         padding="0 0 0 8px"
         shadow="10px"

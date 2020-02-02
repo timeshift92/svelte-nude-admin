@@ -12,8 +12,18 @@
       {
         name: 'id',
         title: 'Ид',
+        sort: is_desc => ({
+          id: is_desc ? 'desc' : 'asc',
+        }),
         value: model => model.id,
-        filter: { type: 'text', path: 'product_locales', operator: '_ilike', name: 'name', value: '', placeholder: 'Название' },
+        filter: {
+          query: value => ({
+            product_locales: {
+              name: { _ilike: value },
+            },
+          }),
+          placeholder: 'Название',
+        },
       },
       { name: 'rest', title: 'Остаток', component: Custom },
       { name: 'product_locales', fields: ['name', 'description'], value: row => row.product_locales[0].name, title: 'Название' },

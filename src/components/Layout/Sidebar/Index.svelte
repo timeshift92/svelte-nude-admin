@@ -19,22 +19,22 @@
   height="103vh"
   z="front"
   place="|fixed|fixed"
-  overflow="yes :pressed:[scroll-y]|no :pressed[scroll-y]"
+  overflow=":pressed:[scroll-y] yes |:pressed[scroll-y] no"
   area="span 12"
   border
   width="{$progress + 70}px|{$progress}px">
   <nu-heading padding="1" text="center" level="4">
-    <nu-link color="local" fill="local" hide="yes #sidebar:pressed[no]" transition="all 1.5s">
+    <nu-link color="local" fill="local" hide="^#sidebar :pressed[no] yes " transition="all 1.5s">
       <a style="text-decoration:none" href={brand.url}>{''}</a>
       {brand.name}
     </nu-link>
-    <nu-link color="local" fill="local" hide="no #sidebar:pressed[yes]" transition="all 1.5s">
+    <nu-link color="local" fill="local" hide="^#sidebar :pressed[yes] no " transition="all 1.5s">
       <a style="text-decoration:none" href={brand.url}>{''}</a>
       {brand.short_name}
     </nu-link>
   </nu-heading>
   {#each sidebar as list}
-    <nu-heading hide="yes #sidebar:pressed[no]" transition="all 1.5s ease-out" padding="1" text="w1" level="6">
+    <nu-heading hide="^#sidebar :pressed[no] yes " transition="all 1.5s ease-out" padding="1" text="w1" level="6">
       {list.name}
     </nu-heading>
     <List items={list.items} />

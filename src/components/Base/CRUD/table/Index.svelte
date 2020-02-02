@@ -14,12 +14,11 @@
 </nu-flex>
 
 <script>
-
-  import {Body} from './body'
-  import Header from './Header.svelte'
+  import { Body } from './body'
+  import { Header } from './header'
   import { onDestroy } from 'svelte'
   export let rows
   import { getContext, setContext } from 'svelte'
-	let { columns } = getContext('CRUD')
-	console.log(columns)
+  let { columns } = getContext('CRUD')
+  console.log(columns)
 </script>

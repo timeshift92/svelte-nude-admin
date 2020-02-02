@@ -20,13 +20,13 @@
     "svelte": "^3.16.7"
   },
   "dependencies": {
-    "@sveltech/routify": "^1.0.1-16",
+    "@sveltech/routify": "^1.0.1-50",
     "chart.js": "^2.9.3",
     "cross-env": "^6.0.3",
     "graphql-svelte": "^1.1.6",
     "livereload": "^0.8.2",
     "nollup": "^0.9.0",
-    "numl": "^0.9.4",
+    "numl": "^0.10.0-beta.25",
     "postcss-load-config": "^2.1.0",
     "prettier-plugin-svelte": "^0.7.0",
     "rollup-plugin-generate-html-template": "^1.6.0",

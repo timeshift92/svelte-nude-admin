@@ -1,5 +1,5 @@
 <nu-rowgroup>
-  {#each $rows as row}
+  {#each $rows$ as row}
     <nu-row transform="none" place="center">
       {#each columns as col}
         <nu-cell border="1x" text="center">
@@ -16,6 +16,6 @@
 
 <script>
   import { getContext } from 'svelte'
-	let { columns, actions, rows } = getContext('CRUD')
-	console.log($rows)
+	let { columns, actions, rows$ } = getContext('CRUD')
+
 </script>

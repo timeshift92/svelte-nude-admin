@@ -1,6 +1,6 @@
 <nu-btngroup value={selectedPage}>
-  <nu-btn {...offset === 0 ? { disabled: 'true' } : {}} on:click={e => (offset === 0 ? '' : dec)}>Prev</nu-btn>
-  <nu-btn value={1} on:click={() => next(1)}>1</nu-btn>
+  <nu-btn {...offset === 0 ? { disabled: 'true' } : {}} on:input={e => (offset === 0 ? '' : dec)}>Prev</nu-btn>
+  <nu-btn value={1} on:input={() => next(1)}>1</nu-btn>
   {#if selectedPage >= pageSize}
     <nu-btn disabled>...</nu-btn>
   {/if}
@@ -9,20 +9,24 @@
   {/each}
   {#if selectedPage <= tmpPages.length - 5}
     <nu-btn disabled>...</nu-btn>
-    <nu-btn value={tmpPages.length} on:click={() => next(tmpPages.length)}>{tmpPages.length}</nu-btn>
+    <nu-btn value={tmpPages.length} on:input={() => next(tmpPages.length)}>{tmpPages.length}</nu-btn>
   {/if}
-  <nu-btn {...selectedPage === tmpPages.length ? { disabled: 'true' } : {}} on:click={inc}>Next</nu-btn>
+  <nu-btn {...selectedPage >= tmpPages.length ? { disabled: 'true' } : {}} on:input={inc}>Next</nu-btn>
 </nu-btngroup>
 
 <script>
   import { createEventDispatcher } from 'svelte'
-
+  import { getContext } from 'svelte'
+  let { request, total$ } = getContext('CRUD')
   const dispatch = createEventDispatcher()
   let selectedPage = 1
 
   function inc() {
     if (selectedPage < tmpPages.length) {
       offset = offset + limit
+      request.paginate(limit, offset)
+      request.upd()
+      selectedPage++
       dispatch('change')
     }
   }
@@ -38,10 +42,11 @@
     offset = (page - 1) * limit
     dispatch('change')
   }
+	let total = 0
+  $: total = $total$
 
-  export let total = 0
   export let limit = 5
-  export let offset = 0
+  let offset = 0
   export let pageSize = 5
   let pages = []
   let tmpPages = []

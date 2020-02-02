@@ -4,7 +4,7 @@
   bind:this={child}
   transition="height .5s ease-out;"
   overflow="no"
-  height="{startHeight}; #block:{type}[{height}px]"
+  height="^#block :{type}[{height}px] {startHeight}; "
   shadow="none"
   gap="2px"
   display="flex"
@@ -59,7 +59,7 @@
   export let hide = 'no'
   export let menu
 	export let type = 'pressed'
-	
+
 
   let child
 	export let items = []
