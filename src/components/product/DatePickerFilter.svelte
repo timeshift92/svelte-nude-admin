@@ -15,7 +15,6 @@
   let date_end = null //new Date(new Date().setHours(23, 59, 59, 99))
 
   $: if ((date_start, date_end)) {
-    console.log(date_end)
     filterChange({ created_at: { _gte: date_start, _lte: date_end } })
   } else {
     filterClear('created_at')

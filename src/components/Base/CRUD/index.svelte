@@ -5,7 +5,7 @@
     </Modal>
   </nu-el>
   <div slot="pagination" class="inline-block p-4">
-    <Pagination bind:offset />
+    <Pagination limit={data.limit}  bind:offset />
   </div>
 </Table>
 
@@ -42,8 +42,8 @@
   data.rows$ = writable([])
   data.total$ = writable(0)
   request.upd = async () => {
-    const res = await request.paginate(data.limit, offset).get()
-    queryResult$.set(res)
+		const res$ = await request.paginate(data.limit, offset).await()
+    queryResult$ = res$
   }
   $: if ($queryResult$ && $queryResult$.data) {
     data.rows$.set($queryResult$.data[data.queryName])
