@@ -7,9 +7,12 @@
   import DatePickerFilter from './DatePickerFilter.svelte'
 	import Slider from 'co/Base/slider'
 
+
   const data = {
     queryName: 'products',
-    limit: 15,
+		pagination:{
+			limit:15
+		},
     columns: [
       {
         name: 'id',
@@ -21,7 +24,7 @@
         filter: {
           query: value => ({
             product_locales: {
-              name: { _ilike: value },
+              name: { _ilike: `%${value}%` },
             },
           }),
           placeholder: 'Название',

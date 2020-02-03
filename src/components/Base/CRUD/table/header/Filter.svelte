@@ -9,7 +9,6 @@
             type="text"
             on:change={e => {
               const val = e.currentTarget.value
-              debugger
               if (val) request.where(column.filter.query(e.currentTarget.value))
               else {
                 const keys = Object.keys(column.filter.query(e.currentTarget.value))
