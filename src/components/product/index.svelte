@@ -7,7 +7,6 @@
   import DatePickerFilter from './DatePickerFilter.svelte'
 	import Slider from 'co/Base/slider'
 
-
   const data = {
     queryName: 'products',
 		pagination:{

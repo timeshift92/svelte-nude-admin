@@ -130,7 +130,6 @@
         }))
       }
       let rest = await mutate(queryName + queryPrefix, { ...formData })
-      console.log(rest)
       let finalData = cache.data[queryName.toLowerCase()]
       if (formType == 'update') {
         for (let index = 0; index < finalData.length; index++) {

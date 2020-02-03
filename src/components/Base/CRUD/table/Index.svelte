@@ -20,5 +20,4 @@
   export let rows
   import { getContext, setContext } from 'svelte'
   let { columns } = getContext('CRUD')
-  console.log(columns)
 </script>

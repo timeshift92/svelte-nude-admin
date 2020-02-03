@@ -31,8 +31,6 @@
   let name = 'world'
   import { fade, fly } from 'svelte/transition'
 	export let images = []
-	console.log(images)
-	console.log($$props)
   let selected = images[0]
   const click = image => {
     selected = false
