@@ -5,13 +5,19 @@
   import { query } from 'api.js'
   import Custom from './Custom.svelte'
   import DatePickerFilter from './DatePickerFilter.svelte'
-	import Slider from 'co/Base/slider'
+  import Slider from 'co/Base/slider'
 
   const data = {
     queryName: 'products',
-		pagination:{
-			limit:15
-		},
+    pagination: {
+      limit: 15,
+    },
+    create: true,
+    actions: {
+      title: 'Действия',
+      update: true,
+      delete: true,
+    },
     columns: [
       {
         name: 'id',
@@ -29,8 +35,20 @@
           placeholder: 'Название',
         },
       },
-			{ name: 'rest', title: 'Остаток', component: Custom },
-			{ name: 'created_at', title: 'Создана', filter: {component: DatePickerFilter} },
+      { name: 'rest', title: 'Остаток', component: Custom },
+      { name: 'created_at', title: 'Создана', filter: { component: DatePickerFilter } },
+      {
+        name: 'product_colors',
+        fields: ['color_id'],
+        value: row => {
+          let val = ''
+          for (let index = 0; index < row.product_colors.length; index++) {
+            val += ' ' + row.product_colors[index].color_id
+          }
+          return val
+        },
+        title: 'Ид цвета',
+      },
       { name: 'product_locales', fields: ['name', 'description'], value: row => row.product_locales[0].name, title: 'Название' },
       {
         name: 'product_images',
@@ -42,27 +60,31 @@
         title: 'Изображение',
       },
     ],
-    actions: [{ name: 'create' }, { name: 'update' }, { name: 'custom', component: Custom }],
+
     componentProps: [
       {
-        type: 'hidden',
-        name: 'locales_id',
-        value: 1,
-      },
-      {
-        type: 'text',
-        name: 'name',
-        path: 'product_locales',
-        label: 'Название',
-        placeholder: 'Название',
-      },
-
-      {
-        type: 'text',
-        name: 'description',
-        path: 'product_locales',
-        label: 'Описание',
-        placeholder: 'Описание',
+        type: 'relation',
+        title: 'Локализация',
+        name: 'product_locales',
+        fields: [
+          {
+            type: 'text',
+            name: 'description',
+            label: 'Описание',
+            placeholder: 'Описание',
+          },
+          {
+            type: 'text',
+            name: 'name',
+            label: 'Название',
+            placeholder: 'Название',
+          },
+          {
+            type: 'hidden',
+            name: 'locales_id',
+            value: 1,
+          },
+        ],
       },
       {
         group: 'text',
@@ -77,7 +99,6 @@
         label: 'Цена',
         placeholder: 'Цена',
       },
-
       {
         type: 'number',
         name: 'old_price',
@@ -118,39 +139,37 @@
       },
       {
         type: 'dropdown',
-        name: 'color_id',
-        path: 'product_colors',
+        name: 'product_colors',
         multiple: true,
         label: 'Цвет',
         placeholder: 'Выберите Цвет',
         data: {
           preload: type => query('COLORS'),
           fieldName: 'color_locales.name',
-          filter: 'color_id',
+          foreign_key: 'color_id',
           name: 'COLORS',
         },
       },
       {
         type: 'dropdown',
-        name: 'category_id',
-        path: 'categories_products',
+        name: 'categories_products',
         label: 'Категория',
         placeholder: 'Выберите категория',
         data: {
           preload: type => query('CATEGORIES'),
           fieldName: 'category_locales.name',
-
+          foreign_key: 'category_id',
           name: 'CATEGORIES',
         },
       },
 
-      {
-        column: 'span 3',
-        type: 'image',
-        name: 'images',
-        label: 'Изображение',
-        placeholder: 'Изображение',
-      },
+      // {
+      //   column: 'span 3',
+      //   type: 'image',
+      //   name: 'product_images',
+      //   label: 'Изображение',
+      //   placeholder: 'Изображение',
+      // },
     ],
   }
 </script>

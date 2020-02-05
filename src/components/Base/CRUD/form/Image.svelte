@@ -38,12 +38,14 @@
         imgs[0].is_main = true
       }
     }
-    if (!multiple) imgs = data[0]
+		if (!multiple) imgs = data[0]
+		output[name] = imgs
     dispatch('images', imgs)
   }
   let images
-  let selected = 0
-  let data = []
+	let selected = 0
+	export let value,output, name
+  let data = value
   export let update = false
   export let id
   export let multiple = true

@@ -6,7 +6,7 @@
   {:else}
     <nu-label>{label}</nu-label>
     <nu-input {...error ? { color: 'red' } : {}} use:events use:attrs={$$props}>
-      <input use:attrs={$$props} bind:value />
+      <input use:attrs={$$props} bind:value  />
     </nu-input>
   {/if}
   {#if error}
@@ -15,7 +15,8 @@
 </nu-block>
 
 <script>
-  export let label, value, error, type
+	export let label, value, error, type, output,name
+	$: output[name] = value
   import { getEventsAction, getAttributesAction } from 'utils.js'
   import { current_component } from 'svelte/internal'
   const events = getEventsAction(current_component)

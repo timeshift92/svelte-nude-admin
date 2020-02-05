@@ -1,49 +1,14 @@
 <nu-grid columns="repeat(3,1fr)" width="100%" gap="2">
   {#each componentProps as prop}
-    <svelte:component this={Field[prop.type]} {...prop}
-
-    values={prop.path && formType == 'update' ? row[prop.path] : undefined}
-    update={formType === 'update'}
-    depend={getDepend(prop.depend)}
-    id={{ [queryName
-              .toLowerCase()
-              .substr(0, queryName.length - 1) + '_id']: formData.id }}
-          on:images={e => (formData[prop.name] = e.detail)}
-    />
-
-    <!-- {#if isNativeType(prop.type)}
-        <Field
-          label={prop.label}
-          step="0.01"
-          bind:value={formData[prop.name]}
-          type={prop.type}
-          autocomplete={prop.autocomplete}
-          placeholder={prop.placeholder} />
-      {:else if prop.type == 'file'}
-        <Image
-          multiple={prop.multiple}
-          update={formType === 'update'}
-          id={{ [queryName
-              .toLowerCase()
-              .substr(0, queryName.length - 1) + '_id']: formData.id }}
-          on:images={e => (formData[prop.name] = e.detail)} />
-      {:else if prop.type == 'select'}
-        <div class="w-full px-3 mt-2 pyrex-select">
-          <label for="" class="pyrex-label">{prop.label}</label>
-          <Dropdown
-            multiple={prop.multiple}
-            values={prop.path && formType == 'update' ? row[prop.path] : undefined}
-            bind:value={formData[prop.name]}
-            id={formData['id']}
-            data={prop.data}
-            depend={getDepend(prop.depend)} />
-        </div>
-      {:else if prop.type == 'select2'}
-        <div class="w-full px-3 mt-2 pyrex-select">
-          <label for="" class="pyrex-label">{prop.label}</label>
-          <Dropdown2 bind:value={formData[prop.name]} data={prop.data} />
-        </div>
-      {/if} -->
+    {#if prop.component}
+      <svelte:component this={prop.component} bind:output on:change={e => (formData = Object.assign(formData, e.detail))} {...prop} />
+    {:else if prop.type == 'relation'}
+      {#each prop.fields as field}
+        <svelte:component this={Field[field.type]} bind:output bind:value={formData[prop.name][0][field.name]} {...field} />
+      {/each}
+    {:else}
+      <svelte:component this={Field[prop.type]} bind:output bind:value={formData[prop.name]} {...prop} />
+    {/if}
   {/each}
 
   <nu-flex>
@@ -52,99 +17,48 @@
 </nu-grid>
 
 <script>
-  import { query, restore, mutate } from 'api.js'
+  import { query, restore, mutate, hasura } from 'api.js'
   import { getContext, setContext } from 'svelte'
-  const { queryName, componentProps, returning } = getContext('CRUD')
-  import Field from 'co/Base/Form'
-  import { Dropdown, Dropdown2, Image } from '../../../components/Base/Form/index.js'
-  export let formType = 'create'
+  import { writable } from 'svelte/store'
+  const { queryName, componentProps, returning, columns, rows$, cached, queryResult$ } = getContext('CRUD')
+  import { mutationAdapter, mutationFieldsAdapter } from '../../../queryTemplates/query.js'
+
   export let row
+  let output = {}
+  let id = row.id
+  import Field from '../../../form'
+  mutationFieldsAdapter(hasura(queryName), componentProps)
+    .where({ id: row.id })
+    .get()
+    .then(c => {
+      formData = row = c.data[queryName][0]
+    })
   let formData = {}
-  let dataPrefix = 'insert_'
-	let queryPrefix = '_INSERT'
-  if (formType === 'update') {
-    formData['id'] = row.id
-    dataPrefix = 'update_'
-    queryPrefix = '_UPDATE'
-  }
 
-  function isNativeType(type) {
-    return ['password', 'email', 'text', 'number', 'hidden'].includes(type)
-  }
-
-  function getKey(data, key) {
-    if (!data) return ''
-    if (Array.isArray(data)) {
-      return getKey(data[0], key)
-    } else if (data.name != undefined) {
-      return data.name
-    } else if (typeof data === 'object') {
-      return getKey(data[Object.keys(data)[0]], key)
-    } else {
-      return data.name || ''
-    }
-  }
-  componentProps.map(item => {
-    if (formType === 'update') {
-      if (item.path) {
-        formData[item.name] = row[item.path][0] ? row[item.path][0][item.name] : ''
-      } else if (item.type === 'file') {
-        formData[item.name] = []
-      } else {
-        formData[item.name] = row[item.name]
-      }
-    } else if (item.value) {
-      formData[item.name] = item.value
-    } else {
-      formData[item.name] = ''
-    }
-  })
+  formData = row
+  const dataPrefix = 'update_'
+  const queryPrefix = '_UPDATE'
 
   export let handleClose
-  export let cache
-
-  $: getDepend = itemName => {
-    return formData[itemName]
-  }
 
   function check_ref_key() {
-    let keys = Object.keys(formData)
-    keys.map(key => {
-      if (key.indexOf('id') != -1 && typeof formData[key] !== 'undefined') {
-        if (formData[key] < 0 || (formData[key] != undefined && formData[key].length == 0)) {
-          delete formData[key]
-        }
+    for (var key in formData) {
+      if (!formData[key] || formData[key] < 0) {
+        delete formData[key]
       }
-    })
+    }
   }
 
-  function send(e) {
-
+  async function send(e) {
     e.preventDefault()
     let res = async () => {
       check_ref_key()
-      if (formData['color_id']) {
-        formData['color_id'] = formData['color_id'].map(c => ({
-          color_id: c.id ? c.id : c,
-          ...(formData['id'] ? { product_id: formData['id'] } : {}),
-        }))
-      }
-      let rest = await mutate(queryName + queryPrefix, { ...formData })
-      let finalData = cache.data[queryName.toLowerCase()]
-      if (formType == 'update') {
-        for (let index = 0; index < finalData.length; index++) {
-          if (
-            finalData[index].id == rest.data[`update_${queryName.toLowerCase()}`].returning[0].id ||
-            finalData[index].id == rest.data[`update_${queryName.toLowerCase()}`].returning[0].ids
-          )
-            finalData[index] = rest.data[`update_${queryName.toLowerCase()}`].returning[0]
-        }
-      } else {
-        finalData = [...finalData, rest.data[`${dataPrefix}${queryName.toLowerCase()}`].returning[0]]
-      }
-      restore(queryName, { [queryName.toLowerCase()]: finalData })
+      const query = mutationAdapter(queryName, output, componentProps, 'update')
+      let res = await query.where({ id }).mutate()
+      debugger
+      queryResult$.set(cached.data[queryName].push(res.data[`${dataPrefix}${queryName}`].returning[0]))
     }
-    res()
+    await res()
     handleClose(false)
   }
 </script>

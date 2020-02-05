@@ -1,4 +1,4 @@
-<nu-flex flow="column" height="100vh" width="100%">
+<nu-flex flow="column" >
   <slot name="create" />
   <slot name="pagination" />
   <nu-table border="1x bottom" width="100%">

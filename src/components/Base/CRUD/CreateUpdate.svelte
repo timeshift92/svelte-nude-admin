@@ -1,49 +1,14 @@
 <nu-grid columns="repeat(3,1fr)" width="100%" gap="2">
   {#each componentProps as prop}
-    <svelte:component this={Field[prop.type]} {...prop}
-
-    values={prop.path && formType == 'update' ? row[prop.path] : undefined}
-    update={formType === 'update'}
-    depend={getDepend(prop.depend)}
-    id={{ [queryName
-              .toLowerCase()
-              .substr(0, queryName.length - 1) + '_id']: formData.id }}
-          on:images={e => (formData[prop.name] = e.detail)}
-    />
-
-    <!-- {#if isNativeType(prop.type)}
-        <Field
-          label={prop.label}
-          step="0.01"
-          bind:value={formData[prop.name]}
-          type={prop.type}
-          autocomplete={prop.autocomplete}
-          placeholder={prop.placeholder} />
-      {:else if prop.type == 'file'}
-        <Image
-          multiple={prop.multiple}
-          update={formType === 'update'}
-          id={{ [queryName
-              .toLowerCase()
-              .substr(0, queryName.length - 1) + '_id']: formData.id }}
-          on:images={e => (formData[prop.name] = e.detail)} />
-      {:else if prop.type == 'select'}
-        <div class="w-full px-3 mt-2 pyrex-select">
-          <label for="" class="pyrex-label">{prop.label}</label>
-          <Dropdown
-            multiple={prop.multiple}
-            values={prop.path && formType == 'update' ? row[prop.path] : undefined}
-            bind:value={formData[prop.name]}
-            id={formData['id']}
-            data={prop.data}
-            depend={getDepend(prop.depend)} />
-        </div>
-      {:else if prop.type == 'select2'}
-        <div class="w-full px-3 mt-2 pyrex-select">
-          <label for="" class="pyrex-label">{prop.label}</label>
-          <Dropdown2 bind:value={formData[prop.name]} data={prop.data} />
-        </div>
-      {/if} -->
+    {#if prop.component}
+      <svelte:component this={prop.component} on:change={e => (formData = Object.assign(formData, e.detail))} {...prop} />
+    {:else if prop.type == 'relation'}
+      {#each prop.fields as field}
+        <svelte:component this={Field[field.type]} bind:value={formData[prop.name][0][field.name]} {...field} />
+      {/each}
+    {:else}
+      <svelte:component this={Field[prop.type]} bind:value={formData[prop.name]} {...prop} />
+    {/if}
   {/each}
 
   <nu-flex>
@@ -54,14 +19,18 @@
 <script>
   import { query, restore, mutate } from 'api.js'
   import { getContext, setContext } from 'svelte'
-  const { queryName, componentProps, returning } = getContext('CRUD')
-  import Field from 'co/Base/Form'
-  import { Dropdown, Dropdown2, Image } from '../../../components/Base/Form/index.js'
+  import { writable } from 'svelte/store'
+  const { queryName, componentProps, returning, columns, rows$, cached, queryResult$ } = getContext('CRUD')
+  import { mutationAdapter } from './queryTemplates/query.js'
+
+  import Field from './form'
+
   export let formType = 'create'
   export let row
+
   let formData = {}
   let dataPrefix = 'insert_'
-	let queryPrefix = '_INSERT'
+  let queryPrefix = '_INSERT'
   if (formType === 'update') {
     formData['id'] = row.id
     dataPrefix = 'update_'
@@ -95,6 +64,8 @@
       }
     } else if (item.value) {
       formData[item.name] = item.value
+    } else if (item.type == 'relation') {
+      formData[item.name] = [{}]
     } else {
       formData[item.name] = ''
     }
@@ -108,44 +79,22 @@
   }
 
   function check_ref_key() {
-    let keys = Object.keys(formData)
-    keys.map(key => {
-      if (key.indexOf('id') != -1 && typeof formData[key] !== 'undefined') {
-        if (formData[key] < 0 || (formData[key] != undefined && formData[key].length == 0)) {
-          delete formData[key]
-        }
+    for (var key in formData) {
+      if (!formData[key] || formData[key] < 0) {
+        delete formData[key]
       }
-    })
+    }
   }
 
-  function send(e) {
-
+  async function send(e) {
     e.preventDefault()
     let res = async () => {
       check_ref_key()
-      if (formData['color_id']) {
-        formData['color_id'] = formData['color_id'].map(c => ({
-          color_id: c.id ? c.id : c,
-          ...(formData['id'] ? { product_id: formData['id'] } : {}),
-        }))
-      }
-      let rest = await mutate(queryName + queryPrefix, { ...formData })
-      console.log(rest)
-      let finalData = cache.data[queryName.toLowerCase()]
-      if (formType == 'update') {
-        for (let index = 0; index < finalData.length; index++) {
-          if (
-            finalData[index].id == rest.data[`update_${queryName.toLowerCase()}`].returning[0].id ||
-            finalData[index].id == rest.data[`update_${queryName.toLowerCase()}`].returning[0].ids
-          )
-            finalData[index] = rest.data[`update_${queryName.toLowerCase()}`].returning[0]
-        }
-      } else {
-        finalData = [...finalData, rest.data[`${dataPrefix}${queryName.toLowerCase()}`].returning[0]]
-      }
-      restore(queryName, { [queryName.toLowerCase()]: finalData })
+      const query = mutationAdapter(queryName, formData, componentProps)
+      let res = await query.mutate()
+      queryResult$.set(cached.data[queryName].push(res.data[`${dataPrefix}${queryName}`].returning[0]))
     }
-    res()
+    await res()
     handleClose(false)
   }
 </script>

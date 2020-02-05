@@ -10,13 +10,11 @@
     display="flex"
     border="0"
     radius="0"
-    padding="0  "
     flow="column"
     theme="main"
-    place="fixed cover"
+    place="cover"
     z="front"
-    width="100%"
-    height="200%">
+    >
     <nu-icon size="lg" name="x-square" place="flex-end" on:click={() => (showModal = false)} />
     <slot handle={handleClose} />
   </nu-card>
