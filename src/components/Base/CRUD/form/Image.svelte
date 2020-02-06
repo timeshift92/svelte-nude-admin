@@ -39,7 +39,7 @@
       }
     }
 		if (!multiple) imgs = data[0]
-		output[name] = imgs
+
     dispatch('images', imgs)
   }
   let images
@@ -68,7 +68,8 @@
       })
     }
     setTimeout(() => {
-      getImages()
+			getImages()
+			output[name] = imgs
     }, 500)
   }
   async function getBase64(file) {

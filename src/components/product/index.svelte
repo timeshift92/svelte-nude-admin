@@ -152,7 +152,7 @@
       },
       {
         type: 'dropdown',
-        name: 'categories_products',
+        name: 'categories_product',
         label: 'Категория',
         placeholder: 'Выберите категория',
         data: {
@@ -162,14 +162,14 @@
           name: 'CATEGORIES',
         },
       },
-
-      // {
-      //   column: 'span 3',
-      //   type: 'image',
-      //   name: 'product_images',
-      //   label: 'Изображение',
-      //   placeholder: 'Изображение',
-      // },
+      {
+        column: 'span 3',
+        type: 'image',
+				name: 'product_images',
+				fields: ['name', 'extension', 'image', 'alt', 'id', 'is_main'],
+        label: 'Изображение',
+        placeholder: 'Изображение',
+      },
     ],
   }
 </script>

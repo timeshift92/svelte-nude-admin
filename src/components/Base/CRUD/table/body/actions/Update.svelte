@@ -4,7 +4,7 @@
       <svelte:component this={prop.component} bind:output on:change={e => (formData = Object.assign(formData, e.detail))} {...prop} />
     {:else if prop.type == 'relation'}
       {#each prop.fields as field}
-        <svelte:component this={Field[field.type]} bind:output bind:value={formData[prop.name][0][field.name]} {...field} />
+        <svelte:component this={Field[field.type]} path={prop.name} bind:output bind:value={formData[prop.name][0][field.name]} {...field} />
       {/each}
     {:else}
       <svelte:component this={Field[prop.type]} bind:output bind:value={formData[prop.name]} {...prop} />
@@ -21,7 +21,7 @@
   import { getContext, setContext } from 'svelte'
   import { writable } from 'svelte/store'
   const { queryName, componentProps, returning, columns, rows$, cached, queryResult$ } = getContext('CRUD')
-  import { mutationAdapter, mutationFieldsAdapter } from '../../../queryTemplates/query.js'
+  import { updateAdapter, mutationFieldsAdapter } from '../../../queryTemplates/query.js'
 
   export let row
   let output = {}
@@ -53,10 +53,19 @@
     e.preventDefault()
     let res = async () => {
       check_ref_key()
-      const query = mutationAdapter(queryName, output, componentProps, 'update')
+      const query = updateAdapter(queryName, output, componentProps, id)
+
       let res = await query.where({ id }).mutate()
-      debugger
-      queryResult$.set(cached.data[queryName].push(res.data[`${dataPrefix}${queryName}`].returning[0]))
+
+      queryResult$.set(cchd => {
+        cchd.data[queryName].flatMap(dt => {
+          if (dt.id == res.data[`${dataPrefix}${queryName}`].returning[0].id) {
+            dt = Object.assign(dt,res.data[`${dataPrefix}${queryName}`].returning[0])
+          }
+				})
+				rows$.set(cchd.data[queryName])
+        return cchd
+      })
     }
     await res()
     handleClose(false)

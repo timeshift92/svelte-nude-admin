@@ -1,20 +1,16 @@
 {#await $preload}
   Загрузка
 {:then dt}
-  <div class="inline-block relative w-64">
-
+  <div>
     {#if multiple}
-      <select multiple bind:value>
+      <select multiple bind:value on:change={newData}>
         {#each dt.data[queryName.toLowerCase()] as item}
           <option value={item.number || item.id}>{getLabel(item)}</option>
         {/each}
 
       </select>
     {:else}
-      <select
-        bind:value
-        class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none
-        focus:shadow-outline">
+      <select on:change={newData} bind:value>
         <option selected disabled />
         {#each dt.data[queryName.toLowerCase()] as item}
           <option value={item.number || item.id}>{getLabel(item)}</option>
@@ -23,7 +19,6 @@
       </select>
     {/if}
 
-    <div style="height:5px" class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700" />
   </div>
 {:catch error}
   {error}
@@ -47,13 +42,13 @@
         value = value.flatMap(vl => vl[data.foreign_key])
       } else if (data.foreign_key) {
         value = value[0][data.foreign_key]
-      } else {
-        output[name] = value
+      } else if(Array.isArray(value)) {
+        value = value[0]
       }
     }, 300)
   })
 
-  $: if (value) {
+  function newData() {
     if (multiple && data.foreign_key) {
       output[name] = value.map(vl => ({ [data.foreign_key]: vl }))
     } else if (data.foreign_key) {
