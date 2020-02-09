@@ -4,15 +4,23 @@
 
 <script>
   import { getContext, setContext } from 'svelte'
-  import { writable } from 'svelte/store'
+  import { writable, get } from 'svelte/store'
   import { columnsAdapter } from './queryTemplates/query.js'
-  let data = getContext('CRUD')
+  export let data;
+  data.queryResult$ = writable(writable([]))
 
-  let queryResult$ = writable([])
+  function getData() {
+    const dt = get(data.queryResult$)
+    if (dt && dt.subscribe) {
+      return get(dt)
+    }
+    return false
+  }
   if (data.queryName) {
     data.rows$ = writable([])
     data.total$ = writable(0)
-    data.queryResult$ = writable(0)
+    data.offset$ = writable(0)
+
     let request = columnsAdapter(data.queryName, data.columns)
     if (data.queryParams) {
       request.where(data.queryParams)
@@ -21,21 +29,25 @@
     if (data.pagination) {
       request.paginate(data.pagination.limit, data.$offset$)
     }
-		queryResult$ = request.await()
-		window.qr = queryResult$;
-    data.queryResult$ = request.await()
-    data.request = request
 
     request.upd = async () => {
-      const res$ = await request.paginate(data.pagination.limit, data.$offset$).await()
-      queryResult$ = res$
+			const res$ = await request.paginate(data.pagination.limit, get(data.offset$)).await()
+			const result = await get(res$)
+      data.queryResult$.set(res$)
+			data.rows$.set(result.data[data.queryName])
+			 window.rw = data.rows$;
+      data.total$.set(result.data[data.queryName + '_aggregate'].aggregate.count)
+      window.qr = data.queryResult$
     }
-  }
 
-  $: if (data.queryName && $queryResult$ && $queryResult$.data) {
-    data.rows$.set($queryResult$.data[data.queryName])
-    data.cached = $queryResult$
-    if ($queryResult$.data[data.queryName + '_aggregate']) data.total$.set($queryResult$.data[data.queryName + '_aggregate'].aggregate.count)
+    request.upd()
+		data.request = request
+		setContext('CRUD', data)
+  }
+  $: if (data.queryName && getData() && getData().data && data.queryResult$) {
+    data.rows$.set(getData().data[data.queryName])
+    data.cached = getData()
+    if (data.cached.data[data.queryName + '_aggregate']) data.total$.set(data.cached.data[data.queryName + '_aggregate'].aggregate.count)
   }
 
   setContext('CRUD', data)

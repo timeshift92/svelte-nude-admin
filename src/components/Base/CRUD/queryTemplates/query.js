@@ -1,6 +1,6 @@
 import { hasura } from 'api';
 
-
+import {objectWithoutKey} from '../utils'
 export function columnsAdapter(schema, columns, callback = (field, relation) => relation, _query = null) {
 	const query = _query || hasura(schema)
 	columns.map(column => {
@@ -12,7 +12,7 @@ export function columnsAdapter(schema, columns, callback = (field, relation) => 
 			query.select(column.name)
 		}
 	})
-	return query;
+	return query.orderBy({ id: 'asc' });
 }
 
 export function mutationFieldsAdapter(query, columns) {
@@ -51,23 +51,50 @@ function clearManyType(name) {
 		return name
 	}
 
+	
+}
+
+function getConditions(val) {
+	let obj = {}
+
+		let index = false;
+		Object.keys(val).map(k => {
+			if (k.indexOf('id') != -1) {
+				index = k
+			}
+		})
+		if(index != false){
+			obj[index] = val[index]		
+		}
+		
+	return obj
 }
 
 export function updateAdapter(schema, variables, columns, id) {
 	const type = 'update'
-	const returning = mutationFieldsAdapter(hasura('returning'), columns)
-	let query = hasura(schema)[type]({ id }).where({ id }).select(`${returning._fields} ${returning._with}`)
-	.select(' id ')
-
+	let query = hasura(schema)[type]({ id }).where({ id }).select('id')
+	mutationFieldsAdapter(query, columns)
 
 	for (const variable in variables) {
-		if (Array.isArray(variables[variable]) && variables[variable].length > 1) {
-			query.compose(variable, (deleting => {
-				return deleting.delete({ [`${clearManyType(schema)}_id`]: id })
-			}))
-			query.compose(variable, (qr => {
-				return qr.insert(variables[variable].flatMap(v => ({ ...v, [`${clearManyType(schema)}_id`]: id })))
-			}))
+		if (Array.isArray(variables[variable]) && variables[variable].length > 0) {
+			// query.compose(variable, (deleting => {
+			// 	return deleting.delete({ [`${clearManyType(schema)}_id`]: id })
+			// }))
+			const insertDatas = variables[variable].filter(item => item._create);
+			if (insertDatas.length > 0) {
+				query.compose(variable, (qr => {
+					return qr.insert(insertDatas.flatMap(v => ({ ...objectWithoutKey(v,'_create'), [`${clearManyType(schema)}_id`]: id })))
+				}))
+			}
+			else {
+				variables[variable].filter((item) => !item._create).map((it, i) => {
+					query.compose(variable, (qr => {
+						return qr.alias(`${variable}_${i}`).update(it)
+						.where(Object.assign({ [`${clearManyType(schema)}_id`]: id },getConditions(it)))
+					}))
+				})
+			}
+
 			delete variables[variable];
 
 		} else if (Array.isArray(variables[variable]) && variables[variable].length < 2) {
@@ -92,7 +119,8 @@ export function mutationAdapter(schema, variables, columns, type = 'insert') {
 			query.compose(variables, (deleting => {
 				deleting.delete({ [clearManyType(schema)]: { _eq: variables.id } })
 			}))
-			query.with(variable, (qr => {
+			debugger
+			query.compose(variable, (qr => {
 				qr.update()
 			}))
 

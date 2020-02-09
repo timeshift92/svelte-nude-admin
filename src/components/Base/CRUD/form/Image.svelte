@@ -2,7 +2,13 @@
   <nu-grid columns="repeat(4,1fr)" gap="2">
     {#each data as dt, index}
       <nu-flex gap="2">
-        <nu-icon size="lg" name="x-square" on:click={() => (data = data.filter((item, i) => index != i))} />
+        <nu-icon
+          size="lg"
+          name="x-square"
+          on:click={() => {
+            data = data.filter((item, i) => index != i)
+            output[name] = data
+          }} />
         <img width="20%" src={dt.image} alt={dt.name} />
         <nu-flex flow="column">
           <input type="text" bind:value={dt.name} placeholder="Название" />
@@ -15,7 +21,7 @@
       </nu-flex>
     {/each}
   </nu-grid>
-  <input id="input" on:change={saveImages} bind:files={images} type="file" multiple />
+  <input id="input" bind:files={images} type="file" {...multiple ? { multiple: true } : {}} />
 </nu-block>
 
 <script>
@@ -25,33 +31,34 @@
   const events = getEventsAction(current_component)
   const attrs = getAttributesAction(current_component)
   const dispatch = createEventDispatcher()
+  export let depend
+  // function getImages() {
+  //   let imgs = data
+  //   if (imgs.length > 0) {
+  //     let is_checked = false
+  //     imgs.map(c => {
+  //       if (c.is_main) is_checked = c.is_main
+  //     })
+  //     if (!is_checked) {
+  //       imgs[0].is_main = true
+  //     }
+  //   }
+  //   if (!multiple) imgs = data[0]
 
-  function getImages() {
-    let imgs = data
-    if (imgs.length > 0) {
-      let is_checked = false
-      imgs.map(c => {
-        if(c.is_main)
-        is_checked = c.is_main
-      })
-      if (!is_checked) {
-        imgs[0].is_main = true
-      }
-    }
-		if (!multiple) imgs = data[0]
-
-    dispatch('images', imgs)
-  }
+  //   dispatch('images', imgs)
+  // }
   let images
-	let selected = 0
-	export let value,output, name
+  let selected = 0
+  export let value, output, name
   let data = value
   export let update = false
   export let id
-  export let multiple = true
+  export let multiple = false
 
-  $: getImages(data)
-
+  // $: getImages(data)
+  $: if (images || depend) {
+    saveImages()
+  }
   function saveImages() {
     for (var i = 0; i < images.length; i++) {
       let image = images[i]
@@ -63,14 +70,14 @@
         img.is_main = selected == i
         img.alt = img.name
         img.image = res
-        img.extension = image.name.substr(image.name.indexOf('.') + 1)
+        img.extension = '.' + image.name.slice((Math.max(0, image.name.lastIndexOf('.')) || Infinity) + 1)
         data = [...data, img]
+        output[name] = data
       })
     }
-    setTimeout(() => {
-			getImages()
-			output[name] = imgs
-    }, 500)
+    // setTimeout(() => {
+
+    // }, 500)
   }
   async function getBase64(file) {
     return new Promise((resolve, reject) => {

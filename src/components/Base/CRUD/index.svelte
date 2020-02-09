@@ -1,4 +1,4 @@
-<ServiceProvider>
+<ServiceProvider {data} let:data>
   <Table>
     <nu-el slot="create" padding="1">
       {#if data.create}
@@ -10,7 +10,7 @@
     </nu-el>
     <div slot="pagination" class="inline-block p-4">
       {#if data.pagination}
-        <Pagination limit={data.pagination.limit} bind:offset={data.$offset$} />
+        <Pagination />
       {/if}
     </div>
   </Table>
@@ -42,10 +42,4 @@
 
   export let data
 
-  data.offset$ = writable(0)
-  let limit = data.pagination ? data.pagination.limit : 15
-
-  setContext('CRUD', data)
-
-  let table
 </script>

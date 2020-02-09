@@ -34,7 +34,7 @@ app.use(bodyParser.json({ limit: '10mb' }));
 app.use(express.static('./images'))
 
 app.get('/images/:schema/:id/:image', async function (req, res) {
-  // res.json(req.path)  
+  // res.json(req.path)
   if (!req.query.width || !req.query.height) {
     res.status(422).json({ 'error': "width and height required" });
     return;
@@ -150,7 +150,8 @@ function saveImages(path, item, query, id) {
 
 function saveImage(path, item, query = 'UPDATE_PRODUCT_IMAGES', id = 'product_id') {
   const imageName = item[id] + '_' + Date.now() + '.png';
-  const base64Data = item.image.replace(/^data:([A-Za-z-+/]+);base64,/, '');
+	const base64Data = item.image.replace(/^data:([A-Za-z-+/]+);base64,/, '');
+	
   fs.writeFileSync(path + '/' + imageName, base64Data, { encoding: 'base64' });
   console.log(hgeEndpoint)
   fetch(hgeEndpoint, {

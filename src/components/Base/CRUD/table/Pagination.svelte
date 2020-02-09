@@ -1,21 +1,21 @@
 <nu-btngroup value={selectedPage}>
-  <nu-btn data-prev value={selectedPage + 1} {...offset === 0 ? { disabled: 'true' } : {}} on:click={dec}>Prev</nu-btn>
-  {#each pagination(selectedPage, pageCount) as pg}
+  <nu-btn data-prev value={selectedPage + 1} {...offset === 0 ? { disabled: 'true' } : {}} on:click={dec}>{pagination.next || 'Prev'}</nu-btn>
+  {#each createPagination(selectedPage, pageCount) as pg}
     {#if pg == '...'}
       <nu-btn disabled>...</nu-btn>
     {:else}
-      <nu-btn checked={isCurrent(pg)} value={pg} on:click={e => next(pg)}>{pg}</nu-btn>
+      <nu-btn data-page value={pg} on:click={e => next(pg)}>{pg}</nu-btn>
     {/if}
   {/each}
-  <nu-btn data-next value={selectedPage + 1} {...selectedPage >= pageCount ? { disabled: 'true' } : {}} on:click={inc}>Next</nu-btn>
+  <nu-btn data-next value={selectedPage + 1} {...selectedPage >= pageCount ? { disabled: 'true' } : {}} on:click={inc}>{pagination.next || 'Next'}</nu-btn>
 </nu-btngroup>
 
 <script>
-  import { createEventDispatcher } from 'svelte'
+  export let limit = 15
+
   import { getContext } from 'svelte'
-  let { request, total$ } = getContext('CRUD')
-  const dispatch = createEventDispatcher()
-  let selectedPage = 1
+  let { request, total$, offset$, pagination } = getContext('CRUD')
+
   function removePressed() {
     setTimeout(() => {
       document.querySelector('nu-btn[data-next]').removeAttribute('pressed')
@@ -41,21 +41,30 @@
     }
   }
   function next(page) {
+    setTimeout(() => {
+      document.querySelectorAll('nu-btn[data-page]').forEach(c => c.removeAttribute('pressed'))
+      document.querySelector(`nu-btn[value="${page}"`).setAttribute('pressed', true)
+    }, 120)
+
     selectedPage = page
     offset = (page - 1) * limit
     update()
   }
 
   function update() {
-    request.upd()
+    setTimeout(() => {
+      request.upd()
+    }, 50)
   }
   let total = 0
+  let offset = 0
+  let selectedPage = 1
   $: total = $total$
+  offset = $offset$
+  $: offset$.set(offset)
   $: pageCount = Math.round(total / limit)
-  export let limit = 5
-  export let offset = 0
 
-  function pagination(currentPage, pageCount) {
+  function createPagination(currentPage, pageCount) {
     let delta = 2,
       left = currentPage - delta,
       right = currentPage + delta + 1,
@@ -79,10 +88,5 @@
     }
 
     return result
-  }
-
-  $: isCurrent = page => {
-    if (offset === (page - 1) * limit) selectedPage = page
-    return offset === (page - 1) * limit
   }
 </script>

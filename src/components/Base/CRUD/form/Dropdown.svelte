@@ -7,7 +7,6 @@
         {#each dt.data[queryName.toLowerCase()] as item}
           <option value={item.number || item.id}>{getLabel(item)}</option>
         {/each}
-
       </select>
     {:else}
       <select on:change={newData} bind:value>
@@ -15,7 +14,6 @@
         {#each dt.data[queryName.toLowerCase()] as item}
           <option value={item.number || item.id}>{getLabel(item)}</option>
         {/each}
-
       </select>
     {/if}
 
@@ -35,14 +33,13 @@
   export let depend
   export let id
   export let output = {}
-
   onMount(() => {
     setTimeout(() => {
       if (multiple && data.foreign_key) {
         value = value.flatMap(vl => vl[data.foreign_key])
       } else if (data.foreign_key) {
         value = value[0][data.foreign_key]
-      } else if(Array.isArray(value)) {
+      } else if (Array.isArray(value)) {
         value = value[0]
       }
     }, 300)

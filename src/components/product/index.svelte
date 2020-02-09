@@ -6,7 +6,6 @@
   import Custom from './Custom.svelte'
   import DatePickerFilter from './DatePickerFilter.svelte'
   import Slider from 'co/Base/slider'
-
   const data = {
     queryName: 'products',
     pagination: {
@@ -61,11 +60,16 @@
       },
     ],
 
-    componentProps: [
+componentProps: [
       {
         type: 'relation',
         title: 'Локализация',
         name: 'product_locales',
+        tabs: {
+          count: 2,
+          labels: ['ru', 'uz'],
+          args: [{ name: 'locales_id', value: 1 }, {name: 'locales_id', value:  2 }],
+        },
         fields: [
           {
             type: 'text',
@@ -79,13 +83,9 @@
             label: 'Название',
             placeholder: 'Название',
           },
-          {
-            type: 'hidden',
-            name: 'locales_id',
-            value: 1,
-          },
         ],
       },
+
       {
         group: 'text',
         type: 'text',
@@ -152,7 +152,10 @@
       },
       {
         type: 'dropdown',
-        name: 'categories_product',
+        options: {
+          stage: true,
+        },
+        name: 'categories_products',
         label: 'Категория',
         placeholder: 'Выберите категория',
         data: {
@@ -163,10 +166,14 @@
         },
       },
       {
-        column: 'span 3',
+				column: 'span 3',
+				options: {
+          stage: true,
+        },
         type: 'image',
-				name: 'product_images',
-				fields: ['name', 'extension', 'image', 'alt', 'id', 'is_main'],
+        name: 'product_images',
+        multiple: true,
+        fields: ['name', 'extension', 'image', 'alt', 'id', 'is_main'],
         label: 'Изображение',
         placeholder: 'Изображение',
       },
