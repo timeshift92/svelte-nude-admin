@@ -1,3 +1,3 @@
-import CRUD from './Index.svelte';  
+import CRUD from './Index.svelte';
 
 export default CRUD

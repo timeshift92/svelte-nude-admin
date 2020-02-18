@@ -24,7 +24,7 @@
 
 <script>
   import { Body } from './body'
-  import { Header } from './header'
+  import Header  from './header/Header.svelte'
   import { onDestroy } from 'svelte'
   export let rows
   import { getContext, setContext } from 'svelte'

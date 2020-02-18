@@ -5,7 +5,7 @@
 </Section>
 
 <script>
-  import Pie from 'co/Chart/Pie.svelte'
+  import {Pie} from 'co/Chart'
   import Section from 'co/Base/Section'
   export let route
 </script>

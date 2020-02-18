@@ -7,7 +7,7 @@
     title: 'Table example',
     body: 'fetching data in api',
   }
-  import Product from 'co/product'
+  import Product from '../../components/product/Index.svelte'
   import Section from 'co/Base/Section'
     export let scoped
   export let route = scoped.route

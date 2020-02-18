@@ -1,5 +1,5 @@
 
 {
-  "contentBase": "./public",
+  "contentBase": "./dist",
   "historyApiFallback": true
 }

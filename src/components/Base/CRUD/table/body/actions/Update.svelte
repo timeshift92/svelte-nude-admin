@@ -71,7 +71,7 @@
 
   formData = row
   const dataPrefix = 'update_'
-  
+
 
   export let handleClose
 

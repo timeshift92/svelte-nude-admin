@@ -1,11 +1,12 @@
-<Crud {data} />
+<CRUD {data} />
 
 <script>
-  import Crud from '../Base/CRUD/index.svelte'
+	import CRUD from '../base/crud'
+
   import { query } from 'api.js'
   import Custom from './Custom.svelte'
   import DatePickerFilter from './DatePickerFilter.svelte'
-  import Slider from 'co/Base/slider'
+  import Slider from 'co/Base/slider/index.svelte'
   // const data = {
   //   queryName: 'products',
   //   pagination: {
