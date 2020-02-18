@@ -5,7 +5,7 @@
   display="grid"
   column="span {getColumnLength()}">
   {#each columns as col, i}
-    <nu-columnheader cursor="pointer" role="checkbox" border="1x" text="center">
+    <nu-columnheader cursor="pointer" role="checkbox" border="1px" text="center">
       <nu-flex gap="0.5" content="center">
         <nu-btn
           shadow="none"
@@ -22,7 +22,7 @@
     </nu-columnheader>
   {/each}
   {#if actions}
-    <nu-columnheader cursor="pointer" role="checkbox" border="1x" text="center">
+    <nu-columnheader cursor="pointer" role="checkbox" border="1px" text="center">
       <nu-flex gap="0.5" content="center">
         <nu-btn
           shadow="none"

@@ -1,3 +1,8 @@
+<style>
+nu-menu#sidebar::-webkit-scrollbar{
+	display:none
+}
+</style>
 <nu-block
   id="cover"
   place="fixed cover"
@@ -16,13 +21,13 @@
   color
   fill="subtle"
   theme="main"
-  height="103vh"
+  height="100vh"
   z="front"
   place="|fixed|fixed"
-  overflow=":pressed:[scroll-y] yes |:pressed[scroll-y] no"
+  overflow="scroll-y"
   area="span 12"
   border
-  width="{$progress + 70}px|{$progress}px">
+  width="{$progress + 85}px|{$progress}px">
   <nu-heading padding="1" text="center" level="4">
     <nu-link color="local" fill="local" hide="^#sidebar :pressed[no] yes " transition="all 1.5s">
       <a style="text-decoration:none" href={brand.url}>{''}</a>
