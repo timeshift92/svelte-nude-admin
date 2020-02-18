@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "chart.js": "^2.9.3",
+    "dayjs": "^1.8.20",
     "flatpickr": "^4.6.3",
     "graphql-svelte": "^1.1.9",
     "hasura-orm": "^0.1.8",

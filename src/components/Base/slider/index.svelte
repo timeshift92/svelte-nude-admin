@@ -2,6 +2,7 @@
   <nu-flex place="center">
     {#if selected}
       <nu-img
+				loading="lazy"
         width="100px"
         height="100px"
         in:fly={{ y: 20, duration: 500 }}
@@ -16,6 +17,7 @@
   <nu-flex flow="column">
     {#each images as image}
       <nu-img
+			loading="lazy"
         cursor="pointer"
         on:click={() => click(image)}
         width="25px"

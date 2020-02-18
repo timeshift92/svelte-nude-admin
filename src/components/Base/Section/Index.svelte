@@ -1,7 +1,7 @@
 <svelte:head>
   <title>{title}</title>
 </svelte:head>
-<nu-block overflow="scroll" height="90vh">
+<nu-block overflow="scroll" scrollbar height="90vh">
   <nu-flex
     flow="row wrap"
     theme="main"
