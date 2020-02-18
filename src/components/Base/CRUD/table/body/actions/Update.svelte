@@ -1,34 +1,26 @@
 {#if is_loading}
   <Spinner />
 {:else}
-  <nu-grid columns="repeat(3,1fr)" width="100%" gap="2">
-    {#each componentProps as prop}
-      {#if prop.component}
-        <svelte:component this={prop.component} bind:output on:change={e => (formData = Object.assign(formData, e.detail))} {...objectWithoutKey(prop, 'options')} />
-      {:else if prop.type == 'relation'}
-        {#if prop.tabs}
-          <Tabs bind:depend={depend[prop.name]} bind:output value={formData[prop.name]} {...prop.tabs} fields={prop.fields} name={prop.name} path={prop.path} />
-        {:else}
-          {#each prop.fields as field, index}
-            <svelte:component
-              this={Field[field.type]}
-              bind:depend={depend[prop.name]}
-              path={prop.name}
-              index={relation_counter}
-              bind:output
-              value={formData[prop.name][relation_counter][field.name]}
-							
-              {...objectWithoutKey(field,'options')} />
-          {/each}
-        {/if}
+  <Form {...objectWithoutKey(formBuilder, 'fields')}>
+    {#each formBuilder.fields as prop}
+      {#if hasComplexType(prop.type)}
+        <svelte:component
+          this={Form[prop.type]}
+          bind:output
+          bind:value={formData}
+          {...prop} />
       {:else}
-        <svelte:component this={Field[prop.type]} bind:output bind:value={formData[prop.name]} {...objectWithoutKey(prop,'options')} />
+        <Field
+          component={getComponent(prop.type)}
+          {...prop}
+          bind:output
+          bind:value={formData[prop.name]} />
       {/if}
     {/each}
     <nu-flex>
       <nu-btn on:click={send}>Добавить</nu-btn>
     </nu-flex>
-  </nu-grid>
+  </Form>
 {/if}
 
 <script>
@@ -36,8 +28,26 @@
   import { query, restore, mutate, hasura } from 'api.js'
   import { getContext, setContext } from 'svelte'
   import { writable } from 'svelte/store'
-  const { queryName, componentProps, returning, columns, rows$, cached, queryResult$ } = getContext('CRUD')
-  import { updateAdapter, mutationFieldsAdapter } from '../../../queryTemplates/query.js'
+  import {
+    objectWithoutKey,
+    getComponent,
+    hasComplexType,
+  } from '../../../utils.js'
+  import Field, { Form } from '../../../form'
+
+  const {
+    queryName,
+    formBuilder,
+    returning,
+    columns,
+    rows$,
+    cached,
+    queryResult$,
+  } = getContext('CRUD')
+  import {
+    updateAdapter,
+    mutationFieldsAdapter,
+  } from '../../../queryTemplates/query.js'
   let relation_counter = 0
   const incrementReletionCounter = () => {
     relation_counter++
@@ -49,11 +59,8 @@
   let output = {}
   let id = row.id
   let is_loading = true
-  import {objectWithoutKey} from '../../../utils.js'
 
-  import Field from '../../../form'
-  import Tabs from './Tabs.svelte'
-  mutationFieldsAdapter(hasura(queryName), componentProps)
+  const request = mutationFieldsAdapter(hasura(queryName), formBuilder.fields)
     .where({ id: row.id })
     .get(false)
     .then(c => {
@@ -64,7 +71,7 @@
 
   formData = row
   const dataPrefix = 'update_'
-  const queryPrefix = '_UPDATE'
+  
 
   export let handleClose
 
@@ -81,18 +88,18 @@
 
     let res = async () => {
       check_ref_key()
-      debugger
-
-      const query = updateAdapter(queryName, output, componentProps, id)
+      const query = updateAdapter(queryName, output, formBuilder.fields, id)
 
       let res = await query.where({ id }).mutate()
       $queryResult$.set(cchd => {
         cchd.data[queryName].flatMap(dt => {
           if (dt.id == res.data[`${dataPrefix}${queryName}`].returning[0].id) {
-            dt = Object.assign(dt, res.data[`${dataPrefix}${queryName}`].returning[0])
+            dt = Object.assign(
+              dt,
+              res.data[`${dataPrefix}${queryName}`].returning[0]
+            )
           }
         })
-        debugger
         rows$.set(cchd.data[queryName])
         handleClose(false)
         return cchd

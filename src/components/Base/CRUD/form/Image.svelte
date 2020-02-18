@@ -6,22 +6,43 @@
           size="lg"
           name="x-square"
           on:click={() => {
+            data[index]._delete = true
+            value = data
             data = data.filter((item, i) => index != i)
-            output[name] = data
+            dispatch('change')
           }} />
         <img width="20%" src={dt.image} alt={dt.name} />
         <nu-flex flow="column">
-          <input type="text" bind:value={dt.name} placeholder="Название" />
-          <input type="text" bind:value={dt.alt} placeholder="SEO Тэг" />
+          <input
+            name={`${name}[${fields[0]}]`}
+            type="text"
+            bind:value={dt.name}
+            placeholder="Название" />
+          <input
+            name={`${name}[${fields[3]}]`}
+            type="text"
+            bind:value={dt.alt}
+            placeholder="SEO Тэг" />
           <nu-el display="inline-flex">
-            <input name="is_main" bind:checked={dt.is_main} type="checkbox" on:change={() => check(index)} />
-            <nu-label padding="0 0 0 5px" for="is_main">Главное изображение</nu-label>
+            <input
+              name={`${name}[${fields[5]}]`}
+              bind:checked={dt.is_main}
+              type="checkbox"
+              on:change={() => check(index)} />
+            <nu-label padding="0 0 0 5px" for="is_main">
+              Главное изображение
+            </nu-label>
           </nu-el>
         </nu-flex>
       </nu-flex>
     {/each}
   </nu-grid>
-  <input id="input" bind:files={images} type="file" {...multiple ? { multiple: true } : {}} />
+  <input
+    id="input"
+    name={`${name}[${fields[2]}]`}
+    bind:files={images}
+    type="file"
+    {...multiple ? { multiple: true } : {}} />
 </nu-block>
 
 <script>
@@ -31,32 +52,17 @@
   const events = getEventsAction(current_component)
   const attrs = getAttributesAction(current_component)
   const dispatch = createEventDispatcher()
-  export let depend
-  // function getImages() {
-  //   let imgs = data
-  //   if (imgs.length > 0) {
-  //     let is_checked = false
-  //     imgs.map(c => {
-  //       if (c.is_main) is_checked = c.is_main
-  //     })
-  //     if (!is_checked) {
-  //       imgs[0].is_main = true
-  //     }
-  //   }
-  //   if (!multiple) imgs = data[0]
 
-  //   dispatch('images', imgs)
-  // }
   let images
   let selected = 0
-  export let value, output, name
-  let data = value
+  export let value,fields,name
+  let data = value || []
+
   export let update = false
   export let id
   export let multiple = false
 
-  // $: getImages(data)
-  $: if (images || depend) {
+  $: if (images) {
     saveImages()
   }
   function saveImages() {
@@ -70,14 +76,18 @@
         img.is_main = selected == i
         img.alt = img.name
         img.image = res
-        img.extension = '.' + image.name.slice((Math.max(0, image.name.lastIndexOf('.')) || Infinity) + 1)
+
+        img._create = true
+        img.extension =
+          '.' +
+          image.name.slice(
+            (Math.max(0, image.name.lastIndexOf('.')) || Infinity) + 1
+          )
         data = [...data, img]
-        output[name] = data
+        value = data
+        dispatch('change', data)
       })
     }
-    // setTimeout(() => {
-
-    // }, 500)
   }
   async function getBase64(file) {
     return new Promise((resolve, reject) => {

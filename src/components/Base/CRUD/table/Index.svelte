@@ -1,16 +1,25 @@
-<nu-flex flow="column" >
+<nu-flex flow="column" gap="1">
   <slot name="create" />
   <slot name="pagination" />
-  <nu-table border="1x bottom" width="100%">
-    <Header {columns}>
-      <slot name="filters" slot="filters" />
-    </Header>
+  <Header {columns}>
+    <slot name="filters" slot="filters" />
+  </Header>
+  <nu-gridtable
+    shadow="#e4e9f3 0px -2px 3px 0px"
+    height="90vh"
+    overflow="scroll"
+    display="grid"
+    scrollbar
+    border="1x bottom"
+    width="100%"
+    columns={`repeat(${columns.length + 1},1fr)`}>
+
     <Body {columns} {rows}>
       <nu-el slot="actions" let:id let:row>
         <slot {id} {row} name="actions" />
       </nu-el>
     </Body>
-  </nu-table>
+  </nu-gridtable>
 </nu-flex>
 
 <script>

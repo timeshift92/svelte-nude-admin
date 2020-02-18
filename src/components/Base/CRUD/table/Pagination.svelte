@@ -62,7 +62,7 @@
   $: total = $total$
   offset = $offset$
   $: offset$.set(offset)
-  $: pageCount = Math.round(total / limit)
+  $: pageCount = Math.ceil(total / limit)
 
   function createPagination(currentPage, pageCount) {
     let delta = 2,

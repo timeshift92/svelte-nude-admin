@@ -1,9 +1,11 @@
 import Field from "./Field.svelte";
+import FieldSet from "./FieldSet.svelte";
+import Tabs from "./Tabs.svelte";
 import Dropdown from "./Dropdown.svelte";
 import Dropdown2 from "./Dropdown2.svelte";
 import Image from "./Image.svelte";
 import Input from "./Input.svelte";
-import Numb from "./Number.svelte";
+import Form from './Form.svelte';
 
 
 function configure(configuration) {
@@ -40,7 +42,11 @@ Field['dropdown2'] = Dropdown2;
 Field['image'] = Image;
 Field['input'] = Input;
 Field['text'] = Input;
-Field['number'] = Numb;
+Field['number'] = new configure({
+  props: {
+    type: 'number'
+  }
+})
 Field['password'] = new configure({
   props: {
     type: 'password'
@@ -56,11 +62,20 @@ Field['hidden'] = new configure({
     type: 'hidden'
   }
 })
+
+Form['Field'] = Field
+Form['FieldSet'] = FieldSet
+Form['Tabs'] = Tabs
+Form['field'] = Field
+Form['fieldset'] = FieldSet
+Form['tabs'] = Tabs
+
 export {
   Field,
   Dropdown,
   Dropdown2,
-  Image
+  Image,
+  Form
 }
 
 export default Field

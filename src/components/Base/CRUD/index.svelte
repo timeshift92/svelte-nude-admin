@@ -1,12 +1,11 @@
 <ServiceProvider {data} let:data>
   <Table>
-    <nu-el slot="create" padding="1">
+    <nu-el slot="create">
       {#if data.create}
         <Modal let:handle={handleClose}>
           <Form {handleClose} />
         </Modal>
       {/if}
-
     </nu-el>
     <div slot="pagination" class="inline-block p-4">
       {#if data.pagination}

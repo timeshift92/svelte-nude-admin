@@ -1,8 +1,5 @@
 <slot name="button">
-  <nu-btn
-    on:click={() => (showModal = true)}>
-    {buttonName}
-  </nu-btn>
+  <nu-btn on:click={() => (showModal = true)}>{buttonName}</nu-btn>
 </slot>
 
 {#if showModal}
@@ -13,9 +10,12 @@
     flow="column"
     theme="main"
     place="cover"
-    z="front"
-    >
-    <nu-icon size="lg" name="x-square" place="flex-end" on:click={() => (showModal = false)} />
+    z="front">
+    <nu-icon
+      size="lg"
+      name="x-square"
+      place="flex-end"
+      on:click={() => (showModal = false)} />
     <slot handle={handleClose} />
   </nu-card>
 {/if}
@@ -23,7 +23,7 @@
 <script>
   import { createEventDispatcher } from 'svelte'
   // import { fade } from "svelte/transition";
-  let showModal = false
+  export let showModal = false
   export let buttonColor = 'bg-blue-500'
   export let buttonName = 'Добавить'
 
