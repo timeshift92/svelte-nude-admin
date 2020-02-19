@@ -14,7 +14,7 @@
     // pagination: {
     //   limit: 15,
     // },
-    create: false,
+    create: true,
     actions: {
       title: 'Действия',
       update: true,

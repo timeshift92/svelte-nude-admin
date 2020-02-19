@@ -37,9 +37,9 @@
 
   const parseData = () => {
     setTimeout(() => {
-      if (value.length > 0 && multiple && data.foreign_key) {
+      if (value && value.length > 0 && multiple && data.foreign_key) {
         value = value.flatMap(vl => vl[data.foreign_key])
-      } else if (value.length > 0 && data.foreign_key) {
+      } else if (value && value.length > 0 && data.foreign_key) {
         value = value[0][data.foreign_key]
       } else if (Array.isArray(value) && value.length > 0) {
         value = value[0]

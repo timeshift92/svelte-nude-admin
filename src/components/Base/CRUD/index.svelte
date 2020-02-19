@@ -1,6 +1,8 @@
 <ProviderService {data} let:data>
   <Table>
+
     <nu-el slot="create">
+      <ModalService />
       {#if data.create}
         <Modal let:handle={handleClose}>
           <Create {handleClose} />
@@ -16,7 +18,7 @@
 </ProviderService>
 
 <script>
-  import { ProviderService } from './services'
+  import { ProviderService, ModalService } from './services'
 
   import Table from './table/Index.svelte'
   import { Pagination, Modal } from './components'
