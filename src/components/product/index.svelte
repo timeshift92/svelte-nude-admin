@@ -1,15 +1,15 @@
 <CRUD {data} />
 
 <script>
-	import CRUD from '../base/crud'
-	import 'dayjs/locale/ru'
-	import dayjs from 'dayjs';
+  import CRUD from '../base/crud'
+  import 'dayjs/locale/ru'
+  import dayjs from 'dayjs'
   import { query } from 'api.js'
   import Custom from './Custom.svelte'
   import DatePickerFilter from './DatePickerFilter.svelte'
   import Slider from 'co/Base/slider/index.svelte'
 
-	const data = {
+  const data = {
     queryName: 'products',
     // pagination: {
     //   limit: 15,
@@ -40,9 +40,10 @@
       { name: 'rest', title: 'Остаток', component: Custom },
       {
         name: 'created_at',
-				title: 'Создана',
-				value: (row) => dayjs(row.created_at).format('DD-MM-YYYY HH:mm:ss'),
-        filter: { component: DatePickerFilter },
+
+        title: 'Создана',
+        value: row => dayjs(row.created_at).format('DD-MM-YYYY HH:mm:ss'),
+        filter: { options: { column: 'span 2' }, component: DatePickerFilter },
       },
       {
         name: 'product_colors',
@@ -74,7 +75,7 @@
     ],
     formBuilder: {
       columns: 'repeat(3,1fr)',
-      rows: 'repeat(12,1fr)',
+
       fields: [
         {
           type: 'tabs',
@@ -87,11 +88,7 @@
             gap: '5px',
           },
           labels: ['ru', 'uz', 'en'],
-          args: [
-            { name: 'locales_id', value: 1 },
-            { name: 'locales_id', value: 2 },
-            { name: 'locales_id', value: 3 },
-          ],
+          args: [{ name: 'locales_id', value: 1 }, { name: 'locales_id', value: 2 }, { name: 'locales_id', value: 3 }],
           fields: [
             {
               required: true,

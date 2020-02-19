@@ -1,4 +1,4 @@
-<nu-flex content="center" gap="2">
+<nu-flex content="space-around" gap="2">
   <Datepicker bind:date={date_start} />
   <Datepicker bind:date={date_end} />
 </nu-flex>

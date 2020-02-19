@@ -8,7 +8,6 @@
     on:change={event => handleChange(event.detail[0][0])}>
     <div class="flatpickr" id={element_id}>
       <input class="date" type="text" placeholder="Select Date.." data-input />
-
     </div>
   </svelte:component>
 {/if}
@@ -21,13 +20,9 @@
 <script>
   let Flatpickr
   import Russian from 'flatpickr/dist/l10n/ru.js'
-  // import 'flatpickr/dist/flatpickr.css'
-  // import 'flatpickr/dist/themes/light.css'
   import { onMount } from 'svelte'
   onMount(async () => {
     const module = await import('svelte-flatpickr')
-    // import ('flatpickr/dist/flatpickr.css')
-    // import ('flatpickr/dist/themes/light.css')
     Flatpickr = module.default
   })
 
@@ -62,12 +57,15 @@
     border: 1px solid var(--nu-border-color);
     display: block;
     text-align: center;
-    width: 300px;
+    width: -webkit-fill-available;
     text-decoration: none;
     cursor: pointer;
     background: var(--nu-bg-color);
     border-radius: 7px;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
+  }
+  .flatpickr {
+    width: 100%;
   }
 
   .flatpickr-calendar {
@@ -95,7 +93,7 @@
   .flatpickr-innerContainer .flatpickr-weekdays {
     background: var(--nu-bg-color);
     color: var(--nu-text-color);
-   	 border: 1px solid var(--nu-border-color);
+    border: 1px solid var(--nu-border-color);
   }
   .flatpickr-innerContainer .flatpickr-weekday {
     background: var(--nu-bg-color);

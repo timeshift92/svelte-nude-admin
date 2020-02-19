@@ -3,7 +3,7 @@
 </slot>
 
 {#if showModal}
-  <nu-card height="fit-content" scrollbar bind:this={modalElement} display="flex" border="0" radius="0" flow="column" theme="main" place="cover" z="front">
+  <nu-card width="max-content" scrollbar bind:this={modalElement} display="flex" border="0" radius="0" flow="column" theme="main" place="cover" z="front">
     <nu-icon size="lg" name="x-square" place="flex-end" on:click={() => (showModal = false)} />
 
     <slot handle={handleClose} />

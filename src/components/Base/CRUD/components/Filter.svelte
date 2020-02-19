@@ -1,6 +1,6 @@
 {#each columns as column}
   {#if column.filter}
-    <nu-cell>
+    <nu-cell {...column.filter.options}>
       {#if column.filter.component}
         <svelte:component this={column.filter.component} {filterChange} {filterClear} />
       {:else}

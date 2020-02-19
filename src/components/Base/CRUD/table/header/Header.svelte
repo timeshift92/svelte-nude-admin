@@ -1,4 +1,4 @@
-<nu-row columns={`repeat(${getColumnLength()},1fr)`} display="grid" column="span {getColumnLength()}">
+<nu-row columns={`repeat(${getColumnLength()},1fr)`} display="grid" column="span {getColumnLength()}" overflow="scroll">
   {#each columns as col, i}
     <nu-columnheader cursor="pointer" role="checkbox" border="1px" text="center">
       <nu-flex gap="0.5" content="center">
@@ -26,11 +26,15 @@
     </nu-columnheader>
   {/if}
 </nu-row>
-<nu-row columns={`repeat(${getColumnLength()},1fr)`} display="grid" column="span {getColumnLength()}">
+<nu-row columns={`repeat(${getColumnLength()},1fr)`} display="grid" column="span {getColumnLength()}" overflow="scroll">
   <Filter />
 </nu-row>
 <slot />
-
+<style>
+nu-row::-webkit-scrollbar{
+	display:none
+}
+</style>
 <script>
   import {Filter} from 'crud/components'
   import { getContext } from 'svelte'
