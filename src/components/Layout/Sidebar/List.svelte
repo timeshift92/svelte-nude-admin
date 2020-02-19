@@ -9,8 +9,9 @@
     display="flex">
     <nu-menuitem
       bind:this={menu[index]}
+			shadow="^ :pressed[#b5a2d6 0px 0px 0px 2px] "
       id="item"
-      width="^#sidebar :pressed[auto] :pressed[; box-shadow:3px 5px 4px rgba(1,1,1,0.8);] 50% "
+      width="^#sidebar  :pressed[; box-shadow:3px 5px 4px rgba(1,1,1,0.8);] 50% "
       fill
       color
       theme=" :pressed[violet special]"
