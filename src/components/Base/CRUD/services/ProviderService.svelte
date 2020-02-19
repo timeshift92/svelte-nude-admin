@@ -5,8 +5,8 @@
 <script>
   import { getContext, setContext } from 'svelte'
   import { writable, get } from 'svelte/store'
-  import { columnsAdapter } from './queryTemplates/query.js'
-  export let data;
+  import { columnsAdapter } from 'crud/helpers/queryHelper.js'
+  export let data
   data.queryResult$ = writable(writable([]))
 
   function getData() {
@@ -31,18 +31,19 @@
     }
 
     request.upd = async () => {
-			const res$ = await request.paginate(data.pagination.limit, get(data.offset$)).await()
-			const result = await get(res$)
+      if (data.pagination && data.pagination.limit) {
+        request.paginate(data.pagination.limit, get(data.offset$))
+      }
+      const res$ = await request.await()
+      const result = await get(res$)
       data.queryResult$.set(res$)
-			data.rows$.set(result.data[data.queryName])
-			 window.rw = data.rows$;
-      data.total$.set(result.data[data.queryName + '_aggregate'].aggregate.count)
-      window.qr = data.queryResult$
+      data.rows$.set(result.data[data.queryName])
+      if (result.data[data.queryName + '_aggregate']) data.total$.set(result.data[data.queryName + '_aggregate'].aggregate.count)
     }
 
     request.upd()
-		data.request = request
-		setContext('CRUD', data)
+    data.request = request
+    setContext('CRUD', data)
   }
   $: if (data.queryName && getData() && getData().data && data.queryResult$) {
     data.rows$.set(getData().data[data.queryName])

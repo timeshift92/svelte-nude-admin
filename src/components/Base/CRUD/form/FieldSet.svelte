@@ -1,13 +1,6 @@
 <nu-flex use:events use:attrs={options || {}}>
   {#each fields as field}
-    <Field
-      bind:output
-      {index}
-      {type}
-      {...objectWithoutKey(field, 'value')}
-      {path}
-      value={getValue(field)}
-      component={getComponent(field.type)} />
+    <Field bind:output {index} {type} {...objectWithoutKey(field, 'value')} {path} value={getValue(field)} component={getComponent(field.type)} />
   {/each}
 </nu-flex>
 
@@ -20,7 +13,7 @@
     fields = [],
     options
   import Field from './index.js'
-  import { objectWithoutKey, getComponent } from '../utils.js'
+  import { objectWithoutKey, getComponent } from 'crud/helpers/formHelper.js'
   import { getEventsAction, getAttributesAction } from 'utils.js'
   import { current_component } from 'svelte/internal'
   const events = getEventsAction(current_component)

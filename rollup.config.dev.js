@@ -62,6 +62,10 @@ export default {
 				{
 					find: 'co',
 					replacement: path.resolve(projectRootDir, 'src/components')
+				},
+				{
+					find: 'crud',
+					replacement: path.resolve(projectRootDir, 'src/components/base/crud')
 				}
 			],
 			resolve: ['.mjs', '.js', '.jsx', '.json', '.sass', '.scss', '.svelte']

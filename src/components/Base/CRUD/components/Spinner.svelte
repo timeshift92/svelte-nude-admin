@@ -1,7 +1,12 @@
+<nu-flex items="center" content="center" height="100vh" front="z" width="100%">
+  <nu-el class="pulse-bubble-1" width="20px" height="20px" radius="50%" fill={color} />
+  <nu-el class="pulse-bubble-2" width="20px" height="20px" radius="50%" fill={color} />
+  <nu-el class="pulse-bubble-3" width="20px" height="20px" radius="50%" fill={color} />
+</nu-flex>
 
 <script>
-const list = [1,2,3]
-export let color = '#3ff9dc'
+  const list = [1, 2, 3]
+  export let color = '#3ff9dc'
 </script>
 
 <style>
@@ -25,9 +30,3 @@ export let color = '#3ff9dc'
     animation: pulse 0.4s ease 0.4s infinite alternate;
   }
 </style>
-
-<nu-flex items="center" content="center" height="100vh" front="z" width="100%">
-    <nu-el  class="pulse-bubble-1"  width="20px" height="20px" radius="50%" fill={color}/>
-    <nu-el  class="pulse-bubble-2"  width="20px" height="20px" radius="50%" fill={color}/>
-    <nu-el  class="pulse-bubble-3"  width="20px" height="20px" radius="50%" fill={color}/>
-</nu-flex>

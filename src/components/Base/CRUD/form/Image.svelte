@@ -13,36 +13,17 @@
           }} />
         <img width="20%" src={dt.image} alt={dt.name} />
         <nu-flex flow="column">
-          <input
-            name={`${name}[${fields[0]}]`}
-            type="text"
-            bind:value={dt.name}
-            placeholder="Название" />
-          <input
-            name={`${name}[${fields[3]}]`}
-            type="text"
-            bind:value={dt.alt}
-            placeholder="SEO Тэг" />
+          <input name={`${name}[${fields[0]}]`} type="text" bind:value={dt.name} placeholder="Название" />
+          <input name={`${name}[${fields[3]}]`} type="text" bind:value={dt.alt} placeholder="SEO Тэг" />
           <nu-el display="inline-flex">
-            <input
-              name={`${name}[${fields[5]}]`}
-              bind:checked={dt.is_main}
-              type="checkbox"
-              on:change={() => check(index)} />
-            <nu-label padding="0 0 0 5px" for="is_main">
-              Главное изображение
-            </nu-label>
+            <input name={`${name}[${fields[5]}]`} bind:checked={dt.is_main} type="checkbox" on:change={() => check(index)} />
+            <nu-label padding="0 0 0 5px" for="is_main">Главное изображение</nu-label>
           </nu-el>
         </nu-flex>
       </nu-flex>
     {/each}
   </nu-grid>
-  <input
-    id="input"
-    name={`${name}[${fields[2]}]`}
-    bind:files={images}
-    type="file"
-    {...multiple ? { multiple: true } : {}} />
+  <input id="input" name={`${name}[${fields[2]}]`} bind:files={images} type="file" {...multiple ? { multiple: true } : {}} />
 </nu-block>
 
 <script>
@@ -55,7 +36,7 @@
 
   let images
   let selected = 0
-  export let value,fields,name
+  export let value, fields, name
   let data = value || []
 
   export let update = false
@@ -78,11 +59,7 @@
         img.image = res
 
         img._create = true
-        img.extension =
-          '.' +
-          image.name.slice(
-            (Math.max(0, image.name.lastIndexOf('.')) || Infinity) + 1
-          )
+        img.extension = '.' + image.name.slice((Math.max(0, image.name.lastIndexOf('.')) || Infinity) + 1)
         data = [...data, img]
         value = data
         dispatch('change', data)

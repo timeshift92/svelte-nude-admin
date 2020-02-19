@@ -1,6 +1,6 @@
 import { hasura } from 'api';
+import { objectWithoutKey } from './formHelper'
 
-import { objectWithoutKey } from '../utils'
 export function columnsAdapter(schema, columns, callback = (field, relation) => relation, _query = null) {
 	const query = _query || hasura(schema)
 	columns.map(column => {

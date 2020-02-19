@@ -3,7 +3,8 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"],
-      "co/*": ["./src/components/*"]
+      "co/*": ["./src/components/*"],
+      "crud/*": ["./src/components/base/crud/*"]
     }
   }
 }

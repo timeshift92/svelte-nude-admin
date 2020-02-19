@@ -1,9 +1,9 @@
-<ServiceProvider {data} let:data>
+<ProviderService {data} let:data>
   <Table>
     <nu-el slot="create">
       {#if data.create}
         <Modal let:handle={handleClose}>
-          <Form {handleClose} />
+          <Create {handleClose} />
         </Modal>
       {/if}
     </nu-el>
@@ -13,32 +13,14 @@
       {/if}
     </div>
   </Table>
-</ServiceProvider>
-
-<script context="module">
-  import { mutate as qry } from 'api.js'
-  import ServiceProvider from './ServiceProvider.svelte'
-  let queryName
-  let queryParams
-  export async function preload(_query, _params) {
-    queryName = _query
-    queryParams = _params
-    return {
-      cache: await qry(queryName, queryParams),
-    }
-  }
-</script>
+</ProviderService>
 
 <script>
-  // import Spinner from 'co/Spinner.svelte'
-  import Table from './table/Index.svelte'
-  import Pagination from './table/Pagination.svelte'
-  import Form from './CreateUpdate.svelte'
+  import { ProviderService } from './services'
 
-  import Modal from './modal/index.svelte'
-  import { setContext } from 'svelte'
-  import { writable } from 'svelte/store'
+  import Table from './table/Index.svelte'
+  import { Pagination, Modal } from './components'
+  import { Create } from './table/actions'
 
   export let data
-
 </script>
