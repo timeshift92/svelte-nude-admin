@@ -12,7 +12,10 @@ services:
       - "traefik.frontend.rule=Host:pgadmin.${DOMAIN}"
       - "traefik.port=80"
     restart: unless-stopped
+    volumes:
+      - ./pgadmin:/var/lib/pgadmin/storage/pgadmin4_pgadmin.org
   postgres:
+
     image: postgres
     restart: always
     ports:
