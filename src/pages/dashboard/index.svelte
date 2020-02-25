@@ -26,6 +26,6 @@
   var randomScalingFactor = function() {
     return Math.round(Math.random() * 100)
   }
-  import Section from 'co/Base/Section'
+  import Section from 'co/base/Section.svelte'
 
 </script>

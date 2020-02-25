@@ -1,8 +1,8 @@
-<div class="container">
-  <VirtualList items={$rows$} let:item>
-    <nu-row display="grid" columns="repeat(7,1fr)" column="span {getColumnLength()}" transform="none" place="center">
+<div class="container" >
+  <VirtualList items={$rows$} let:item >
+    <nu-row  display="grid" columns="repeat(7,1fr)" column="span {getColumnLength()}" transform="none" place="center">
       {#each columns as col}
-        <nu-cell border="1px" text="center">
+        <nu-cell  border="1px" text="center">
           {#if col.component}
             <svelte:component this={col.component} {...col.props ? { ...col.props(item) } : {}} />
           {:else if col.value}

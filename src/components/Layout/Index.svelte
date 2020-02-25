@@ -6,19 +6,27 @@
   <Sidebar />
   <nu-grid overflow="no" width="100%" low="column" rows="70px 1fr">
     <Header />
-    <slot>
-      <!-- optional fallback -->
-    </slot>
-
+    <Section >
+      <slot>
+        \t This is Example Page This page is just an example for you to create your own page. Example Card Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+        irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+        deserunt mollit anim id est laborum.
+      </slot>
+      <nu-el slot="footer">This is card footer</nu-el>
+    </Section>
   </nu-grid>
 </nu-flex>
 
 <script>
+
   import Header from './Header.svelte'
   import Sidebar from './Sidebar'
   import Body from './Body.svelte'
   import { init } from './helpers/theme-control.js'
   import { onMount } from 'svelte'
+  import Section from 'co/base/Section.svelte'
+
   onMount(() => {
     init()
   })

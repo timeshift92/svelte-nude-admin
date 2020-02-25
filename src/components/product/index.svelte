@@ -1,19 +1,67 @@
 <CRUD {data} />
+<!-- <CRUD data={option} /> -->
 
 <script>
+  import { writable } from 'svelte/store'
+  import { offlineData } from './data'
   import CRUD from '../base/crud'
   import 'dayjs/locale/ru'
   import dayjs from 'dayjs'
   import { query } from 'api.js'
   import Custom from './Custom.svelte'
   import DatePickerFilter from './DatePickerFilter.svelte'
-  import Slider from 'co/Base/slider/index.svelte'
+  import Slider from 'co/base/slider/index.svelte'
+  const option = {
+    rows$: writable(offlineData.data.products),
+    columns: [
+      {
+        name: 'id',
+        title: 'Ид',
+
+        value: model => model.id,
+      },
+      { name: 'rest', title: 'Остаток', component: Custom },
+      {
+        name: 'created_at',
+
+        title: 'Создана',
+        value: row => dayjs(row.created_at).format('DD-MM-YYYY HH:mm:ss'),
+      },
+      {
+        name: 'product_colors',
+        fields: ['color_id'],
+        value: row => {
+          let val = ''
+          for (let index = 0; index < row.product_colors.length; index++) {
+            val += ' ' + row.product_colors[index].color_id
+          }
+          return val
+        },
+        title: 'Ид цвета',
+      },
+      {
+        name: 'product_locales',
+        fields: ['name', 'description'],
+        value: row => row.product_locales[0].name,
+        title: 'Название',
+      },
+      {
+        name: 'product_images',
+        component: Slider,
+        props: row => ({
+          images: [...row.product_images],
+        }),
+        fields: ['name', 'extension', 'image', 'alt', 'id', 'is_main'],
+        title: 'Изображение',
+      },
+    ],
+  }
 
   const data = {
     queryName: 'products',
-    // pagination: {
-    //   limit: 15,
-    // },
+    pagination: {
+      limit: 15,
+    },
     create: true,
     actions: {
       title: 'Действия',

@@ -1,8 +1,8 @@
-<Modal buttonName="Удалить" buttonColor="bg-red-500" let:handle={handleClose}>
+<Modal buttonName="Удалить"  let:handle={handleClose}>
   <Delete {handleClose} {id} />
 </Modal>
 
-<Modal  buttonName="Редактировать" buttonColor="bg-green-500" let:handle={handleClose}>
+<Modal  buttonName="Редактировать"  let:handle={handleClose}>
   <Update  {handleClose} {row} />
 </Modal>
 

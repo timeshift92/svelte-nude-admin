@@ -41,6 +41,7 @@
     }
   }
   function next(page) {
+    removePressed()
     setTimeout(() => {
       document.querySelectorAll('nu-btn[data-page]').forEach(c => c.removeAttribute('pressed'))
       document.querySelector(`nu-btn[value="${page}"`).setAttribute('pressed', true)

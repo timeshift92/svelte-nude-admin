@@ -43,5 +43,5 @@
 
 <script>
   export let route
-  import Breadcrumb from 'co/Base/Breadcrumb'
+  import Breadcrumb from 'co/base/Breadcrumb'
 </script>

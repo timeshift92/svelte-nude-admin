@@ -4,6 +4,7 @@
   <Header {columns}>
     <slot name="filters" slot="filters" />
   </Header>
+  <slot><!-- optional fallback --></slot>
   {#if $rows$.length > 0}
     <Body />
   {/if}

@@ -4,5 +4,5 @@
 		"co":"${workspaceRoot}/src/components",
 		"crud":"${workspaceRoot}/src/components/base/crud"
 	},
-
+	"path-intellisense.extensionOnImport": true
 }

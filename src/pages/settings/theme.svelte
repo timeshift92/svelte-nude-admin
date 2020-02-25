@@ -20,7 +20,7 @@
 <script>
   export let scoped
   export let route = scoped.route
-  import Section from 'co/Base/Section'
+  import Section from 'co/base/Section.svelte'
   let theme = localStorage.getItem('theme')
   let contrast = localStorage.getItem('contrast')
   function setTheme(_theme) {

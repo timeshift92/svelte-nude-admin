@@ -10,5 +10,5 @@
 
 
   import {Pie} from 'co/Chart'
-  import Section from 'co/Base/Section'
+  import Section from 'co/base/Section.svelte'
 </script>

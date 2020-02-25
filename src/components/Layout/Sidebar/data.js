@@ -322,7 +322,7 @@ export let sidebar = [
 				icon: 'user',
 				items: [
 					{
-						url: '/pages/forgor-password',
+						url: '/pages/forgot-password',
 						name: 'Forgot Password',
 					},
 					{
@@ -400,6 +400,7 @@ export let sidebar = [
 				name: 'Settings',
 				icon: 'settings',
 				items: [
+
 					{
 						url: '/settings/theme',
 						name: 'theme',

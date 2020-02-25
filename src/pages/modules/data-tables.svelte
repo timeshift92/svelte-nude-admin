@@ -1,6 +1,6 @@
-<Section {route} {header} title='Table with api'>
+<!-- <Section {route} {header} title='Table with api'> -->
   <Product />
-</Section>
+<!-- </Section> -->
 
 <script>
   let header = {
@@ -8,7 +8,7 @@
     body: 'fetching data in api',
   }
   import Product from '../../components/product/Index.svelte'
-  import Section from 'co/Base/Section'
+  import Section from 'co/base/Section.svelte'
     export let scoped
   export let route = scoped.route
 </script>

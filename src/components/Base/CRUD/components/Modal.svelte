@@ -3,24 +3,34 @@
 </slot>
 
 {#if showModal}
-  <nu-card width="max-content" scrollbar bind:this={modalElement} display="flex" border="0" radius="0" flow="column" theme="main" place="cover" z="front">
-    <nu-icon size="lg" name="x-square" place="flex-end" on:click={() => (showModal = false)} />
+  <nu-card
+  	transition:fade={{duration:120}}
+    height="auto|fit-content"
+    overflow="scroll"
+    scrollbar
+    bind:this={modalElement}
+    display="flex"
+    width="auto"
+    border="0"
+    radius="0"
+    flow="column"
+    theme="main"
+    place="cover"
+    z="front">
 
+    <nu-icon size="lg" name="x-square" place="flex-end" on:click={() => (showModal = false)}></nu-icon>
     <slot handle={handleClose} />
   </nu-card>
 {/if}
 
 <script>
-  import { createEventDispatcher, onMount, tick } from 'svelte'
+  import { createEventDispatcher, onMount } from 'svelte'
+  import { fade } from 'svelte/transition';
   import { modal$ } from 'crud/stores'
   let modalElement
   export let showModal = false
-
   export let buttonName = 'Добавить'
 
-  onMount(async () => {
-    await tick()
-  })
   const handleClick = () => {
     showModal = true
     setTimeout(() => {
@@ -30,12 +40,5 @@
   }
   const handleClose = _showModal => {
     showModal = _showModal
-  }
-
-  let buttonHover = () => {
-    let clr = buttonColor.split('-')
-    clr[2] = '700'
-
-    return clr.join('-')
   }
 </script>
