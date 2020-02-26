@@ -53,7 +53,7 @@ services:
       JWT_PRIVATE_KEY: l4V_LCQtf0RM7WE1uxgySq87Vm7ACi46IEg41WsRxlfWgX22YBJPi_6DvjEZC7ayAa2IpvJ0qFyilArppv9124WM96rwfCfmLf8uyyPWzOtFZAMazhQTS5T9EzdJ5OzagGMzfo_b_Hvx2xLi727KlXfnMNj242n-kK4vD6hvdqzikj4w6XxRF5nf9o4FJ6X4WS8c9H-o358dg26rp_ZN843e3k_cvUBdVs9C_4Wv39We0FPVv_CnVnMneAyCut7ZVeuDsbhGOy2NX6I3XJHQlRYAsG8eUSJhjGyTlw8MpbX-9Yxc99o8w17VP96LvIumtM_Pw1oNMN_TRs6alrr5VQ
       REFRESH_TOKEN_EXPIRES_IN: 54000
   graphql-engine:
-    image: hasura/graphql-engine:v1.1.0-beta.3.cli-migrations
+    image: hasura/graphql-engine:v1.2.0-beta.1.cli-migrations
     depends_on:
     - "postgres"
     restart: always

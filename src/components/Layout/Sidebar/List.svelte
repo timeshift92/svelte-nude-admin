@@ -9,11 +9,12 @@
     display="flex">
     <nu-menuitem
       bind:this={menu[index]}
-			shadow="^ :pressed[#b5a2d6 0px 0px 0px 2px] "
+			shadow="^ :pressed[0 4px 8px #a1c2fb] "
+
       id="item"
       width="^#sidebar  :pressed[; box-shadow:3px 5px 4px rgba(1,1,1,0.8);] 50% "
       fill
-      color
+
       theme=" :pressed[violet special]"
       on:click={e => handleClick(e, item.url)}
       role="checkbox"
@@ -37,9 +38,9 @@
         scrollbar
         fill
         color
-        height="^ :hover[auto; max-height:300px] 0 "
+        height="^ :hover[60vh] 0 "
         overflow="scroll-y"
-        padding="0 0 0 8px"
+
         shadow="10px"
         place="outside-right top">
         <Item   type="hover" {startHeight} items={item.items} />
