@@ -17,11 +17,11 @@
           </nu-flex>
         </nu-flex>
       {/if}
-      <nu-card flow="column" radius="0" gap="2" display="flex">
+      <nu-card radius="1x 1x 0 0" flow="column"  gap="2" display="flex">
         <slot />
       </nu-card>
       {#if is_footer}
-        <nu-card radius="0" fill="local">
+        <nu-card radius="0 0 1x 1x" border="bottom right left 1px" >
           <slot name="footer" />
         </nu-card>
       {/if}

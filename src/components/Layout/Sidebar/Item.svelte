@@ -1,6 +1,5 @@
 <nu-menu
   {...hide ? { hide: hide } : {}}
-  padding="15px 0 0 0 "
   bind:this={child}
   transition="height .5s ease-out;"
   overflow="no"
@@ -11,7 +10,9 @@
   border="0">
   {#each items as item}
     <nu-menuitem
-				shadow="^ :hover[1px] 1px"
+
+		color=" :pressed[color(violet-spnon-special-text)]"
+				shadow="none"
       {...active($isActive(item.url)) ? { 'nu-pressed': true } : {}}
       border="0"
       role="link"

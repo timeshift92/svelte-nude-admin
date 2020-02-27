@@ -8,11 +8,11 @@
     place="^ :pressed[inherit] center "
     display="flex">
     <nu-menuitem
-			radius="1x"
+			radius="3px"
       bind:this={menu[index]}
-			shadow="^ :pressed[0 4px 8px color(focus) ] "
+			shadow="^ :pressed[0 4px 8px color(bg) ] 0"
       id="item"
-      fill
+      fill="^ :pressed[''] transparent"
       theme=" :pressed[violet special]"
       on:click={e => handleClick(e, item.url)}
       role="checkbox"
@@ -40,6 +40,7 @@
         overflow="scroll-y"
         shadow="1x"
         place="outside-right top">
+				<nu-heading level="6" padding="10px" > {item.name}</nu-heading>
         <Item   type="hover" {startHeight} items={item.items} />
       </nu-block>
     {/if}
@@ -65,3 +66,9 @@
   import Item from './Item.svelte'
 	export let items = []
 </script>
+
+<style>
+.sidebar-hover::-webkit-scrollbar {
+    display: none;
+}
+</style>

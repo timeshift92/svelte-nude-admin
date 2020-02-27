@@ -7,3 +7,4 @@ Default.Section = Section
 Default.Icon = Icon
 Default.Background = Background
 export default Default;
+

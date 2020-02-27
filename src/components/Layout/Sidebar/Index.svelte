@@ -25,7 +25,7 @@ nu-menu#sidebar::-webkit-scrollbar{
   height="100vh"
   z="front"
   place="|fixed|fixed"
-  overflow="^ :hover[scroll-y]:pressed[scroll-y] yes  |:hover[yes]:pressed[scroll-y] no"
+  overflow="  :pressed[scroll-y] none  |  :pressed[scroll-y] no"
   area="span 12"
   border
   width="{$progress + 85}px|{$progress}px">
