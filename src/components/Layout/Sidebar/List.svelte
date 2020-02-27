@@ -8,6 +8,7 @@
     place="^ :pressed[inherit] center "
     display="flex">
     <nu-menuitem
+			radius="1x"
       bind:this={menu[index]}
 			shadow="^ :pressed[0 4px 8px color(focus) ] "
       id="item"

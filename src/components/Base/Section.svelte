@@ -3,7 +3,7 @@
 </svelte:head>
 {#if !$header$.disable}
   <nu-block overflow="scroll-y" scrollbar >
-    <nu-flex flow="row wrap" theme="main" fill color content="space-between" padding="1" items="center" shadow="5px" height="70px">
+    <nu-flex flow="row wrap"  fill color content="space-between" padding="1" items="center" shadow="5px" height="70px">
       <nu-heading>{$header$.title}</nu-heading>
       <Breadcrumb.Section />
     </nu-flex>
