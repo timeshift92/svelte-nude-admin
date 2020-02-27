@@ -19,21 +19,23 @@ nu-menu#sidebar::-webkit-scrollbar{
   id="sidebar"
   style="postion:inherit"
   color
+	display="flex"
   fill="subtle"
   theme="main"
   height="100vh"
   z="front"
   place="|fixed|fixed"
-  overflow="^ :pressed:[scroll-y] yes |:pressed[scroll-y] no"
+
+  overflow="^ :hover[scroll-y]:pressed[scroll-y] yes  |:hover[yes]:pressed[scroll-y] no"
   area="span 12"
   border
   width="{$progress + 85}px|{$progress}px">
   <nu-heading padding="1" text="center" level="4">
-    <nu-link color="local" fill="local" hide="^#sidebar :pressed[no] yes " transition="all 1.5s">
+    <nu-link color="local" fill="local" hide="^#sidebar :pressed[no] yes " >
       <a style="text-decoration:none" href={brand.url}>{''}</a>
       {brand.name}
     </nu-link>
-    <nu-link color="local" fill="local" hide="^#sidebar :pressed[yes] no " transition="all 1.5s">
+    <nu-link color="local" fill="local" hide="^#sidebar :pressed[yes] no " >
       <a style="text-decoration:none" href={brand.url}>{''}</a>
       {brand.short_name}
     </nu-link>

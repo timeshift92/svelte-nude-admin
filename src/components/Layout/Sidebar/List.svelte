@@ -5,16 +5,13 @@
     id="block"
     flow="column"
     items="^#sidebar :pressed[inherit] center "
-    place=":pressed[inherit] center "
+    place="^ :pressed[inherit] center "
     display="flex">
     <nu-menuitem
       bind:this={menu[index]}
-			shadow="^ :pressed[0 4px 8px #a1c2fb] "
-
+			shadow="^ :pressed[0 4px 8px color(focus) ] "
       id="item"
-      width="^#sidebar  :pressed[; box-shadow:3px 5px 4px rgba(1,1,1,0.8);] 50% "
       fill
-
       theme=" :pressed[violet special]"
       on:click={e => handleClick(e, item.url)}
       role="checkbox"
@@ -30,7 +27,7 @@
         <nu-icon hide="^#sidebar :pressed[no] yes" />
       {/if}
     </nu-menuitem>
-    {#if menu && menu[index]}
+    {#if menu && menu[index] && item.items && item.items.length > 0}
       <Item   menu ={menu[index]} hide="^#sidebar :pressed[no] yes" {startHeight} items={item.items} />
       <nu-block
 				class:sidebar-hover={true}
@@ -38,10 +35,9 @@
         scrollbar
         fill
         color
-        height="^ :hover[60vh] 0 "
+        height="^ :hover[max(60vh) ] 0 "
         overflow="scroll-y"
-
-        shadow="10px"
+        shadow="1x"
         place="outside-right top">
         <Item   type="hover" {startHeight} items={item.items} />
       </nu-block>

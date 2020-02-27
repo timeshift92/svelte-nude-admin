@@ -1,4 +1,4 @@
-<nu-flex transition="all 1.5s" overflow="no" responsive="1280px|960px|640px" flow="row" height="100vh">
+<nu-flex  overflow="no" responsive="1280px|960px|640px" flow="row" height="100vh">
   <nu-theme hue="250" saturation="auto" padding=".5" border-radius=".5" border-width="1px" animation-time="0.08s" />
   <nu-theme name="violet" hue="277" />
   <nu-theme name="local" hue="277" />

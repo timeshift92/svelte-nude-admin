@@ -11,7 +11,7 @@
   border="0">
   {#each items as item}
     <nu-menuitem
-				shadow="^ :hover[5x]"
+				shadow="^ :hover[1px] 1px"
       {...active($isActive(item.url)) ? { 'nu-pressed': true } : {}}
       border="0"
       role="link"
