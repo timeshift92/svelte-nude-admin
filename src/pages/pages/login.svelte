@@ -1,13 +1,13 @@
 
-<nu-block width="50vh||100vh">
-    <nu-card   border="1 1 0 1" radius="1 1 0 0" >
+<nu-card display="flex" gap="1" theme="main"  border="top 2px solid color(special-bg)"  width="80vh" shadow="2x" >
+	  <nu-theme hue="250" saturation="auto" padding=".5" border-radius=".5" border-width="1px" animation-time="0.08s" />
+	<nu-flex  gap="2"  border="1 1 0 1" radius="1 1 0 0" >
 	<nu-heading level="5"  fill color="var(--nu-focus-color)" >
 	Login
 	</nu-heading>
-
-	</nu-card>
-	<nu-line gap="1"></nu-line>
-	<nu-card display="flex" flow="column" gap="2" padding="2 1 1 1"  radius="0" border="0 1 1 1" >
+	</nu-flex>
+	<nu-line ></nu-line>
+	<nu-flex    display="flex" flow="column" gap="2" padding="2 0 0 0"  radius="0" border="0 1 1 1" >
 		<nu-input shadow="0"  placeholder=" " describedby="tooltip" >
 		<nu-tooltip
 		as="fancy-tooltip"
@@ -26,7 +26,7 @@
 		<input placeholder="">
 		</nu-input>
 		<nu-input placeholder=" "  describedby="tooltip" >
-		<nu-link place="outside-top right" shadow="0"    text=":hover[w3] w2  v-middle" padding="0 1px 0 1"> forgot password </nu-link>
+		<nu-link place="outside-top right" shadow="0"    text=" :hover[w2 u] w2 no-decoration" padding="0 1px 0 1"> forgot password </nu-link>
 		<nu-tooltip
 		as="fancy-tooltip"
 		width="min(11em)"
@@ -44,13 +44,14 @@
 
 		<input placeholder="">
 		</nu-input>
-	</nu-card>
-<nu-line></nu-line>
-</nu-block>
+	</nu-flex>
+<!-- <nu-line></nu-line> -->
+<nu-btn> Login </nu-btn>
+</nu-card>
 
 
 <style>
 nu-card{
-	border-top: 2px solid var(--nu-violet-special-bg-color);
+
 }
 </style>
