@@ -20,7 +20,7 @@ particle('particles-js',{
         }
       },
       "color": {
-        "value": "val(--nu-main-text-color)"
+        "value": "#a4c1fb"
       },
       "shape": {
         "type": "circle",
@@ -60,7 +60,7 @@ particle('particles-js',{
       "line_linked": {
         "enable": true,
         "distance": 200,
-        "color": "val(--nu-main-text-color)",
+        "color": "#a4c1fb",
         "opacity": 0.4,
         "width": 1
       },
