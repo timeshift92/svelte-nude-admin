@@ -14,5 +14,5 @@ yarn && yarn dev
 
 ```
 
-![alt text](../static/../svelte-admin-numl/static/main.png)
-![alt text](../static/../svelte-admin-numl/static/login.png)
+![alt text](../static/../svelte-admin-numl/static/main.png?raw=true)
+![alt text](../static/../svelte-admin-numl/static/login.png?raw=true)
