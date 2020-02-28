@@ -74,7 +74,7 @@
 
 <script>
   // import Toast from 'co/base/Toast.svelte'
-  import Toast from '../../components/base/Toast.svelte'
+  import Toast from 'co/base/Toast.svelte'
   import { header$ } from 'stores'
   let pos = ['top']
   let color = ''
