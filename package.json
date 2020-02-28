@@ -38,6 +38,7 @@
     "graphql-svelte": "^1.1.9",
     "hasura-orm": "^0.1.8",
     "numl": "^0.10.0-beta.38",
+    "particlesjs": "^2.2.3",
     "svelte-flatpickr": "^2.4.0",
     "svelte-icons": "^1.1.0",
     "svelte-preprocess": "^3.4.0"

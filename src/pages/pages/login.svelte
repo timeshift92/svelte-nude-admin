@@ -1,3 +1,5 @@
+
+
 <nu-card display="flex" responsive="1280px|960px|640px" gap="1" theme="main" border="top 2px solid color(special-bg)" width="350px" shadow="2x">
   <nu-theme from="#A16AE8" saturation="auto" padding=".5" border-radius=".5" border-width="1px" animation-time="0.08s" />
   <nu-theme name="fuchsia" from="#FD49A0" />
@@ -62,3 +64,6 @@
   nu-card {
   }
 </style>
+
+
+

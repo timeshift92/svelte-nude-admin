@@ -1,16 +1,4 @@
-
-<div use:part id="particles-js" class="particles-js"></div>
-
-<nu-flex width="100%" height="100vh"  content="center" items="center">
-<nu-theme name="violet" hue="277" />
-<slot />
-</nu-flex>
-
-<script context="module">
-
-		import particle from 'particle.js'
-function part(node){
-particle('particles-js',{
+{
     "particles": {
       "number": {
         "value": 60,
@@ -20,7 +8,7 @@ particle('particles-js',{
         }
       },
       "color": {
-        "value": "val(--nu-main-text-color)"
+        "value": "#ffffff"
       },
       "shape": {
         "type": "circle",
@@ -60,7 +48,7 @@ particle('particles-js',{
       "line_linked": {
         "enable": true,
         "distance": 200,
-        "color": "val(--nu-main-text-color)",
+        "color": "#ffffff",
         "opacity": 0.4,
         "width": 1
       },
@@ -126,21 +114,3 @@ particle('particles-js',{
       "background_size": "cover"
     }
   }
-)
-}
-
-
-</script>
-
-
-<style>
-body{
-	background-color:black
-}
-#particles-js{
-	position:absolute;
-	width:100%;
-	height:100%;
-}
-</style>
-
